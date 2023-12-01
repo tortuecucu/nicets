@@ -10,8 +10,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.6.2",
+    "bootstrap": "^5.3.2",
+    "bootstrap-icons": "^1.11.2",
+    "classnames": "^2.3.2",
+    "dayjs": "^1.11.10",
+    "js-cookie": "^3.0.5",
+    "object-path": "^0.11.8",
+    "primereact": "^10.2.1",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-bootstrap": "^2.9.1",
+    "react-bootstrap-icons": "^1.10.3",
+    "react-datetime-picker": "^5.5.3",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.11",
+    "react-hook-form": "^7.48.2",
+    "react-qr-code": "^2.0.12",
+    "react-query": "^3.39.3",
+    "react-select": "^5.8.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
