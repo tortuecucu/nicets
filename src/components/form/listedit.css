@@ -1,0 +1,7 @@
+.list-edit.compact li .btn-group {
+    visibility: hidden !important;
+}
+
+.list-edit.compact li:hover .btn-group {
+    visibility: visible !important;
+}

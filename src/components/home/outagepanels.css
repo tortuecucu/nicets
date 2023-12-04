@@ -1,0 +1,84 @@
+.outage {
+    cursor: pointer;
+}
+
+li .outage:hover {
+    background-color: var(--bs-gray-100);
+}
+
+.outage .details .system .type {
+  font-weight: 600;
+}
+
+
+.outage .details .headline {
+  font-size: 0.9rem !important;
+}
+
+.outage .eta .confidence {
+  font-size: 0.9rem !important;
+  color: var(--gray-00);
+}
+
+.outage .eta .confidence {
+  color: var(--text-dark);
+}
+
+.outage div.chips {
+  background-color: #ce590b;
+  border-radius: 2rem;
+  padding: 0.4rem;
+  text-align: center;
+  font-weight: 600;
+  color: aliceblue;
+  font-size: 0.8rem;
+}
+
+.chips.prealert {
+  background-color: white !important;
+  color: #fd7e14 !important;
+  border-color: #fd7e14 !important;
+  border-style: solid;
+}
+
+.chips.nominalClosed {
+  background-color: forestgreen !important;
+}
+
+.chips.nominalConfirming {
+  background-color: forestgreen !important;
+}
+
+.chips.outage {
+  background-color: #dc3545 !important;
+}
+
+.chips.correcting {
+  background-color: #0d6efd !important;
+}
+
+.chips.workaround {
+  background-color:  #6F4E37!important;
+}
+
+.chips.check {
+  background-color:  #DAF7A6!important;
+  color: #1e2c03!important;
+}
+
+.outage .action {
+    display: none;
+}
+
+.outage:hover .action {
+    display: block;
+}
+
+
+.eta-label {
+  font-size: 0.9rem;
+}
+
+.outage .status {
+  width: 15% !important;
+}

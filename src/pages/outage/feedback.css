@@ -1,0 +1,29 @@
+.choice {
+    border-right: 4px white solid;
+    background-color: var(--bs-secondary-bg);
+}
+.choice:first-of-type {
+    border-top-left-radius: 6px !important;
+    border-bottom-left-radius: 6px !important;
+}
+.choice:last-of-type {
+    border-top-right-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
+    border-right: none;
+}
+
+div.q2 {
+    background-color: var(--bs-primary-bg-subtle);
+}
+
+p.bottom  {
+    color: var(--bs-primary);
+}
+
+small.date {
+    font-size: 0.8rem;
+}
+
+div.p-timeline-event-opposite{
+    width: 1rem;
+}

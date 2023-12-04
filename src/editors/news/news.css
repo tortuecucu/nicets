@@ -1,0 +1,13 @@
+.news .table thead th {
+    background-color: #ffffff00 !important;
+    color: white;
+}
+.news .table tbody{
+    border-color: var(--bs-primary);
+}
+
+.news .table tbody td {
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    border-color: var(--bs-primary);
+    padding: 0.3em;
+}

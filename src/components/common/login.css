@@ -1,0 +1,39 @@
+.welcome {
+    background-color: #00b88f;
+}
+
+.login {
+    background-color: rgba(255, 255, 255, 0.98);
+}
+
+.login #submit{
+    background-color: #00b88f !important;
+}
+
+.login .details {
+    font-size: 0.9em;
+}
+
+.login .details h4 {
+    font-size: 1.2em;
+}
+
+.login .form-check-input{
+    background-color: #00b88f !important;
+}
+
+.login .content {
+    border-color: #b2f9e873  !important;
+    border-style: none;
+    border-width: 1px;
+    width: 48% !important;
+    background-color: #029c7b75 !important;
+}
+
+.login .content > h4 {
+    color: #e1f7f2 !important;
+}
+
+.login .content > p {
+    color: #dffaf6 !important;
+}

@@ -1,0 +1,8 @@
+{
+    "SERVER_URL": "https://example.com/api/",
+    "SNOW_URL": "https://safran.service-now.com/sp/?id=sso&portal-id=safrangroup",
+    "SNOW_PUBLIC_INCIDENT_PAGE": "",
+    "HOME_URL": "http://localhost:3000",
+    "API_URL": "http://localhost:8080",
+    "INCT_REGEX":"^INCT\\d{9}$"
+  }

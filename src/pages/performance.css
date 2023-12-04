@@ -1,0 +1,9 @@
+
+
+.bicolor .bar .result {
+    visibility: hidden;
+}
+
+.bicolor:hover .bar .result {
+    visibility: visible;
+}

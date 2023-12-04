@@ -1,0 +1,12 @@
+.response {
+    cursor: pointer;
+}
+
+.response:hover {
+    background-color: var(--blue-50);
+}
+
+.response .description {
+    font-size: 0.9rem!important;
+    
+}

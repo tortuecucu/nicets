@@ -1,0 +1,47 @@
+[
+    {
+        "id": 3,
+        "name": "firstIncident",
+        "label": "premier incident déclaré",
+        "occured": "2023-10-02T05:40:02.000Z",
+        "outageId": 3,
+        "milestone": {
+            "id": 3,
+            "name": "firstIncident",
+            "label": "premier incident",
+            "description": "premier incident déclaré",
+            "category": 1,
+            "level": 2
+        }
+    },
+    {
+        "id": 1,
+        "name": "detected",
+        "label": "détection du dysfonctionnement",
+        "occured": "2023-09-30T12:47:22.000Z",
+        "outageId": 3,
+        "milestone": {
+            "id": 1,
+            "name": "detected",
+            "label": "détection",
+            "description": "détection du dysfonctionement",
+            "category": 1,
+            "level": 1
+        }
+    },
+    {
+        "id": 5,
+        "name": "statusActive",
+        "label": "dysfonctionnement confirmé",
+        "occured": "2023-10-02T07:07:05.000Z",
+        "outageId": 3,
+        "milestone": {
+            "id": 12,
+            "name": "statusActive",
+            "label": "dysfonctionnement avéré",
+            "description": "la présence d'un dysfonctionnement étendu à plus de 10 utilisateurs a été confirmé",
+            "category": 1,
+            "level": 1
+        }
+    }
+]

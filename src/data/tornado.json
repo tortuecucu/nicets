@@ -1,0 +1,116 @@
+[
+    {
+        "site": "Le Havre",
+        "result": "yes",
+        "connection": "lan",
+        "count": 21
+    },
+    {
+        "site": "Le Havre",
+        "result": "no",
+        "connection": "wifi",
+        "count": 30
+    },
+    {
+        "site": "Le Havre",
+        "result": "no",
+        "connection": "lan",
+        "count": 3
+    },
+    {
+        "site": "Florange",
+        "result": "yes",
+        "connection": "lan",
+        "count": 19
+    },
+    {
+        "site": "Florange",
+        "result": "no",
+        "connection": "wifi",
+        "count": 12
+    },
+    {
+        "site": "Burnley",
+        "result": "yes",
+        "connection": "lan",
+        "count": 15
+    },
+    {
+        "site": "Burnley",
+        "result": "no",
+        "connection": "wifi",
+        "count": 24
+    },
+    {
+        "site": "Hambourg",
+        "result": "yes",
+        "connection": "lan",
+        "count": 11
+    },
+    {
+        "site": "Hambourg",
+        "result": "no",
+        "connection": "wifi",
+        "count": 6
+    },
+    {
+        "site": "Colomiers",
+        "result": "yes",
+        "connection": "wifi",
+        "count": 6
+    },
+    {
+        "site": "Colomiers",
+        "result": "yes",
+        "connection": "lan",
+        "count": 24
+    },
+    {
+        "site": "Colomiers",
+        "result": "no",
+        "connection": "wifi",
+        "count": 17
+    },
+    {
+        "site": "Saclay",
+        "result": "yes",
+        "connection": "lan",
+        "count": 13
+    },
+    {
+        "site": "Saclay",
+        "result": "yes",
+        "connection": "wifi",
+        "count": 7
+    },
+    {
+        "site": "Pont-Audemer",
+        "result": "yes",
+        "connection": "wifi",
+        "count": 3
+    },
+    {
+        "site": "Pont-Audemer",
+        "result": "yes",
+        "connection": "lan",
+        "count": 9
+    },
+    {
+        "site": "Pont-Audemer",
+        "result": "no",
+        "connection": "wifi",
+        "count": 4
+    },
+    {
+        "site": "Casablanca",
+        "result": "yes",
+        "connection": "lan",
+        "count": 17
+    },
+    {
+        "site": "Casablanca",
+        "result": "no",
+        "connection": "wifi",
+        "count": 24
+    }
+]

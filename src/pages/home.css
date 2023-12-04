@@ -1,0 +1,45 @@
+div.headline {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: #e9ecef;
+  border-radius: .3rem;
+}
+
+.headline.incident {
+  background-color: #ffe7e6;
+  border: #ff5757 0.1rem solid;
+  border-left: 0.5rem #ff5757 solid;
+  color: #ff5757;
+}
+
+div.headline.incident .title {  
+  font-weight: 700;
+}
+
+div.headline.incident .description {  
+  font-size: 0.9rem;
+}
+
+div.headline  a.btn-primary {
+  background-color: #ff5757;
+  border-color: #ffe7e6;
+}
+
+div.headline  a.btn-light {
+  background-color: #f8f2ee;
+  border-color: #ff5757;
+  color: #dc3545;
+}
+
+/*.outages .outage
+      .status
+      .details 
+        .headline .type .occured 
+        .system .type .punchline
+      .eta .inner 
+
+        .hour 
+        .confidence
+          .rate
+*/
+

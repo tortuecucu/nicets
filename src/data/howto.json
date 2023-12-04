@@ -1,0 +1,392 @@
+[
+    {
+        "type": "Panel",
+        "id": 1,
+        "title": "Quel est votre besoin ?",
+        "children": [
+            {
+                "type": "Response",
+                "title": "Obtenir quelque chose de nouveau",
+                "description": "Périphérique, Logiciels, Droits, Accès",
+                "target": 2,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "Résoudre un dysfonctionnement",
+                "description": "Panne matérielle, application en panne, message d'erreur",
+                "target": 9,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "Je suis un-e nouveau-elle salarié-e",
+                "description": "Je suis un-e nouveau-elle salarié-e",
+                "target": 18,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "Ma situation a changé",
+                "description": "Un changement professionnel ou personnel est ou va intervenir et nécessite d'adapter mon environnement informatique",
+                "target": 18,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "Je ne sais pas",
+                "description": "C'est dommage...",
+                "target": 17,
+                "children": []
+            }
+        ]
+    },
+    
+    {
+        "type": "Panel",
+        "id": 2,
+        "title": "Obtenir quelque chose de nouveau",
+        "children": [
+            {
+                "type": "Response",
+                "title": "Ordinateur",
+                "description": "ma description ici",
+                "target": 5,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "Périphériques",
+                "description": "ma description",
+                "target": 3,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "Logiciels & Licence",
+                "description": "ma description",
+                "target": 4,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "Droits d'accès",
+                "description": "ma description",
+                "target": 7,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "Obtenir de l'espace de stockage supplémentaire",
+                "description": "ma description",
+                "target": 8,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "Autre besoin",
+                "description": "ma description",
+                "target": 17,
+                "children": []
+            }  
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 3,
+        "title": "Périphériques",
+        "children": [
+            {
+                "type": "Action",
+                "title": "Service catalog",
+                "children": [
+                    {
+                        "type": "Fragment",
+                        "children": "<p>test text</p>"
+                    }
+                ]
+            },
+            {
+                "type": "Response",
+                "title": "Contacter le Helpdesk",
+                "description": "",
+                "target": 18,
+                "children": []
+            }
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 4,
+        "title": "J'ai besoin d'un nouveau logiciel",
+        "children": [
+            {
+                "type": "Action",
+                "title": "Utiliser le centre logiciel",
+                "children": [
+                    {
+                        "type": "Fragment",
+                        "children": "<p>test text</p>"
+                    }
+                ]
+            },
+            {
+                "type": "Response",
+                "title": "Contacter le Helpdesk",
+                "description": "",
+                "target": 18,
+                "children": []
+            }
+        ]
+    },
+    
+    {
+        "type": "Panel",
+        "id": 5,
+        "title": "Ordinateur",
+        "children": [
+            {
+                "type": "Action",
+                "title": "Service catalog",
+                "children": [
+                    {
+                        "type": "Fragment",
+                        "children": "<p>test text</p>"
+                    }
+                ]
+            },
+            {
+                "type": "Response",
+                "title": "Contacter le Helpdesk",
+                "description": "",
+                "target": 18,
+                "children": []
+            }
+        ]
+    },
+    
+    {
+        "type": "Panel",
+        "id": 6,
+        "title": "free panel",
+        "children": [
+
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 7,
+        "title": "Droits",
+        "children": [
+            {
+                "type": "Response",
+                "title": "droits SAP",
+                "description": "",
+                "target": 20,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "Contacter le Helpdesk",
+                "description": "",
+                "target": 17,
+                "children": []
+            }
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 8,
+        "title": "espace de stockage",
+        "children": [
+
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 9,
+        "title": "incident déclaré ?",
+        "children": [
+            {
+                "type": "Response",
+                "title": "Non",
+                "description": "",
+                "target": 10,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "oui",
+                "description": "",
+                "target": 14,
+                "children": []
+            }
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 10,
+        "title": "Déclarer un incident",
+        "children": [
+            {
+                "type": "Response",
+                "title": "panne matérielle",
+                "description": "",
+                "target": 17,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "application",
+                "description": "",
+                "target": 11,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "filer",
+                "description": "",
+                "target": 15,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "change",
+                "description": "",
+                "target": 16,
+                "children": []
+            }
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 11,
+        "title": "titre",
+        "children": [
+            {
+                "type": "Response",
+                "title": "j'ai accès",
+                "description": "",
+                "target": 12,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "je n'ai pas accès",
+                "description": "",
+                "target": 18,
+                "children": []
+            }
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 12,
+        "title": "panne fonctionnelle",
+        "children": [
+
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 13,
+        "title": "free panel",
+        "children": [
+
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 14,
+        "title": "Suivre un incident",
+        "children": [
+            {
+                "type": "Response",
+                "title": "Contacter le Helpdesk",
+                "description": "",
+                "target": 17,
+                "children": []
+            }
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 15,
+        "title": "filers",
+        "children": [
+
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 16,
+        "title": "change",
+        "children": [
+
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 17,
+        "title": "Contacter le Helpdesk",
+        "children": [
+            {
+                "type": "Response",
+                "title": "Besoin d'une intervention sans délai",
+                "description": "",
+                "target": 18,
+                "children": []
+            },
+            {
+                "type": "Response",
+                "title": "Je peux attendre 4 heures",
+                "description": "",
+                "target": 19,
+                "children": []
+            }
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 18,
+        "title": "Appeler le Helpdesk",
+        "children": [
+            {
+                "type": "Action",
+                "title": "Appeler la ligne directe",
+                "children": [
+                    
+                ]
+            }
+        ]
+    },    
+    {
+        "type": "Panel",
+        "id": 19,
+        "title": "Contacter le helpdesk",
+        "children": [
+            {
+                "type": "Action",
+                "title": "Utiliser le portail snow",
+                "children": [
+                    
+                ]
+            },
+            {
+                "type": "Action",
+                "title": "envoyer un email",
+                "children": [
+                    
+                ]
+            }
+        ]
+    },
+    {
+        "type": "Panel",
+        "id": 20,
+        "title": "Contacter votre RIP",
+        "children": [
+
+        ]
+    }
+]

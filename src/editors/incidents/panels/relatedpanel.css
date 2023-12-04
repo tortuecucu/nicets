@@ -1,0 +1,7 @@
+.related-panel .actions{
+    visibility: hidden !important;
+}
+
+.related-panel:hover .actions{
+    visibility: visible !important;
+}

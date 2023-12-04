@@ -1,0 +1,62 @@
+.tornado .title {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+
+.tornado .value {
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.tornado .item-name {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 .8rem 0 .8rem;
+}
+
+.tornado .bar-group {
+    display: flex;
+}
+
+.tornado .bar-group .bar.right:nth-child(2){
+    margin-left: 0.08rem;
+}
+
+.tornado .bar-group .bar.left:nth-child(2){
+    margin-right: 0.08rem;
+}
+
+.tornado .left .bar-group {
+    flex-direction: row-reverse;
+    align-items: flex-start!important;
+}
+
+.tornado .bar {
+    font: optional;
+    height: 1rem;
+    color: white;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+}
+
+.tornado.dimensions-2 .bar span.label {
+    display: none;
+}
+
+.tornado .bar.left {
+    margin-right: .8rem;
+    background-color: var(--bs-success);
+    text-align: right;
+}
+
+.tornado .bar.right {
+    margin-left: .8rem;
+    background-color: var(--bs-danger);
+    text-align: left;
+}
+
+.tornado .bar span {
+    padding: .5rem;
+}
