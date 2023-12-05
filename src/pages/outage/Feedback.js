@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Timeline } from 'primereact/timeline';
-import { OutageSummary } from '../../components/home/OutagePanels'
+import { OutageSummary } from '../../components/home/outages/OutagePanels'
 import { useParams } from 'react-router-dom';
 import { useApi } from '../../contexts/ApiProvider';
 import { DummyData } from '../../components/utils/Alerts';

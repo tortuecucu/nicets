@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useApi } from '../../contexts/ApiProvider';
 import ContextForm from "./Context.js"
-import { OutageSummary } from '../../components/home/OutagePanels.js';
+import { OutageSummary } from '../../components/home/outages/OutagePanels.jsx';
 import { PageLoader } from "../../components/utils/PulseLoader";
 import { useMemo } from "react";
 import { DoorClosed } from "react-bootstrap-icons";

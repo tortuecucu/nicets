@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useApi } from '../../contexts/ApiProvider';
 import {ErrorPanel} from "../../components/utils/Error";
 import Loader from "../../components/utils/Loader";
-import { OutageSummary } from '../../components/home/OutagePanels';
+import { OutageSummary } from '../../components/home/outages/OutagePanels';
 import { Toast } from 'primereact/toast';
 
 function ManagementForm({ values, callback }) {
