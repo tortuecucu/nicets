@@ -10,7 +10,7 @@ import { Spinner } from 'react-bootstrap';
 import MissingItem from '../outage/MissingItem';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallback } from '../utils/Error';
-import { HelpdeskContext } from '../common/Head';
+import { useHelpdeskContext } from '../../contexts/HelpdeskContext';
 
 import "./outagepanels.css";
 
@@ -62,14 +62,14 @@ function OutageSummary({ outage, fullHeight = false }) {
 
 function OutageItem({ outage }) {
     const navigate = useNavigate();
-    const { showHelpdesk } = useContext(HelpdeskContext);
+    const { setShowModal } = useHelpdeskContext()
 
     function handleClick(e) {
 
         if (e.target.id === "outageCta" && e.target.name !== 'helpdesk') {
             navigate(e.target.name + "/" + outage.id);
         } else if (e.target.id === "outageCta" && e.target.name === 'helpdesk') {
-            showHelpdesk(true);
+            setShowModal(true);
         } else {
             navigate('outage/' + outage.id);
         }

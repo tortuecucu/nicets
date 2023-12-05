@@ -1,50 +1,42 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { Button } from 'react-bootstrap';
-import { useApi } from '../../contexts/ApiProvider';
 import Cookies from 'js-cookie';
 import { Toast } from 'primereact/toast';
+import { useUser } from '../../api/useUser';
+import { useForm } from 'react-hook-form';
+import { ReactNode } from 'react'
+
 import "./login.css"
 
-const Login = ({ loggedCallback }) => {
-    const api = useApi();
-    console.log('api', useApi)
-    const [email, setEmail] = useState();
-    const form = useRef();
+interface FormData {
+    email?: string,
+    code?: string
+}
+
+const Login = () => {
     const toast = useRef(null);
+    const { logIn } = useUser()
 
-    const submitCallback = async () => {
-        const [dirtyMail, dirtyCode] = [form.current.email.value, form.current.code.value]
-        const cleanedMail = ((dirty) => {
-            dirty = dirty.trim();
-            const atIndex = dirty.indexOf('@');
-            if (atIndex > -1) {
-                dirty = String(dirty).substring(0, atIndex);
-            }
-            return dirty + '@safrangroup.com';
-        })(dirtyMail);
-        const cleanedCode = ((dirty) => {
-            try {
-                return Number(dirty);
-            } catch (error) {
-                return null;
-            }
-        })(dirtyCode);
-
-        api.login(cleanedMail, cleanedCode)
-            .then(result => {
-                if (result) {
-                    loggedCallback();
-                } else {
-                    toast.current.show({ severity: 'error', summary: 'Oops', detail: 'Vérifiez votre email et votre code d\'activation', life: 3000, position: 'top-center' });
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            })
-
+    const handleSubmit = (email: string, code: number): void => {
+        logIn(email, code)
     }
 
-    const getEmail = async () => {
+    return (
+        <>
+            <LoginDumb>
+                <LoginForm onSubmit={handleSubmit} />
+            </LoginDumb>
+            <Toast ref={toast} />
+        </>
+    );
+};
+
+type FormProps = {
+    onSubmit: (email: string, code: number) => void
+}
+
+const LoginForm = (props: FormProps) => {
+    const getCachedEmail = async () => {
         const email = await Cookies.get('user_email');
         if (email) {
             const idx = email.indexOf('@');
@@ -54,18 +46,67 @@ const Login = ({ loggedCallback }) => {
                 return email.substring(0, idx);
             }
         }
-        return null
+        return undefined
     }
 
-    useEffect(() => {
-        async function checkData() {
-            const data = await getEmail();
-            setEmail(data);
+    const getDefaults = async (): Promise<FormData> => {
+        return {
+            email: await getCachedEmail(),
+            code: undefined
         }
-        checkData();
+    }
 
-    }, []);
+    const { register, handleSubmit } = useForm<FormData>({
+        defaultValues: async () => getDefaults()
+    });
 
+    const submitCallback = async (data: FormData) => {
+        const [dirtyMail, dirtyCode] = [data.email, data.code]
+        const cleanedMail: string | undefined = ((dirty) => {
+            if (dirty) {
+                const atIndex = dirty.indexOf('@');
+                if (atIndex > -1) {
+                    dirty = dirty.trim();
+                    dirty = String(dirty).substring(0, atIndex);
+                }
+                return dirty + '@safrangroup.com';
+            }
+            return undefined
+        })(dirtyMail);
+        const cleanedCode: number | undefined = ((dirty) => {
+            try {
+                return Number(dirty);
+            } catch (error) {
+                return undefined;
+            }
+        })(dirtyCode);
+
+        if (cleanedMail && cleanedCode) {
+            props.onSubmit(cleanedMail, cleanedCode)
+        }
+    }
+
+    return (<>
+        <form id="credentials" className="pb-3" onSubmit={handleSubmit(async (data) => await submitCallback(data))}>
+            <div className="input-group input-group-lg mb-3">
+                <input id="email" type="email" className="form-control" placeholder="Votre email" {...register("email")}></input>
+                <span className="input-group-text" id="basic-addon2">@safrangroup.com</span>
+            </div>
+            <div className="form-floating">
+                <input type="number" className="form-control" id="code" placeholder="Code d'invitation" {...register("code")}></input>
+                <label htmlFor="code">Code d'invitation</label>
+                <div id="codeHelp" className="form-text">Vous avez reçu ce code avec votre mail d'invitation</div>
+            </div>
+            <Button id="submit" className='btn-lg w-100 mt-5 py-2 btn-success mb-0'>Je participe à NICE !</Button>
+        </form>
+    </>)
+}
+
+type DumbProps = {
+    children: ReactNode
+}
+
+const LoginDumb = (props: DumbProps) => {
     return (
         <>
             <div className='login row my-3 shadow m-5'>
@@ -88,24 +129,12 @@ const Login = ({ loggedCallback }) => {
                     </div>
                     <div className='row m-2 p-4 login rounded-2 shadow'>
                         <h3 className="text-success mb-4">Rejoignez-nous !</h3>
-                        <form id="credentials" className="pb-3" ref={form}>
-                            <div className="input-group input-group-lg mb-3">
-                                <input id="email" type="email" className="form-control" placeholder="Votre email" value={email}></input>
-                                <span className="input-group-text" id="basic-addon2">@safrangroup.com</span>
-                            </div>
-                            <div className="form-floating">
-                                <input type="number" className="form-control" id="code" placeholder="Code d'invitation"></input>
-                                <label htmlFor="code">Code d'invitation</label>
-                                <div id="codeHelp" className="form-text">Vous avez reçu ce code avec votre mail d'invitation</div>
-                            </div>
-                            <Button id="submit" onClick={submitCallback} className='btn-lg w-100 mt-5 py-2 btn-success mb-0'>Je participe à NICE !</Button>
-                        </form>
+                        {props.children}
                     </div>
                 </div>
             </div>
-            <Toast ref={toast} />
         </>
     );
-};
+}
 
 export default Login;

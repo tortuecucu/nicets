@@ -1,7 +1,6 @@
-// @flow
 
 import { useApi } from "../contexts/ApiProvider"
-import type { AxiosPromise, $AxiosXHR } from 'axios';
+import type { AxiosPromise } from 'axios';
 
 type Map = { [key: string]: any }
 
@@ -29,7 +28,8 @@ type BackendHook = {
     getHandler: Handler,
     postHandler: Handler,
     putHandler: Handler,
-    deleteHandler: Handler
+    deleteHandler: Handler,
+    response: any //TODO: define it
 }
 
 type Response = {
@@ -43,19 +43,19 @@ type Response = {
 const useBackend = (): BackendHook => {
     const api = useApi()
 
-    const get = (url: string, config?: Map): AxiosPromise<$AxiosXHR<any>> => {
+    const get = (url: string, config?: Map): AxiosPromise<any> => {
         return api.getRequest(url, config)
     }
 
-    const post = (url: string, data?: Map, config?: Map): AxiosPromise<$AxiosXHR<any>> => {
+    const post = (url: string, data?: Map, config?: Map): AxiosPromise<any> => {
         return api.postrequest(url, data, config)
     }
 
-    const put = (url: string, data?: Map, config?: Map): AxiosPromise<$AxiosXHR<any>> => {
+    const put = (url: string, data?: Map, config?: Map): AxiosPromise<any> => {
         return api.putRequest(url, data, config)
     }
 
-    const deleteRequest = (url: string, config?: Map): AxiosPromise<$AxiosXHR<any>> => {
+    const deleteRequest = (url: string, config?: Map): AxiosPromise<any> => {
         return api.deleteRequest(url, config)
     }
 

@@ -1,32 +1,23 @@
-import { useEffect } from "react";
-import { useApi } from "../../contexts/ApiProvider"
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
+import { useUser } from "../../api/useUser";
+import { ReactNode } from 'react'
 
-const Watchdog = ({ children, roles, fallback }) => {
-    const api = useApi();
-    const [permissions, setPermissions] = useState([]);
-    const required = (Array.isArray(roles)) ? roles : [roles]
-    const Cls = fallback;
+type WatchdogProps = {
+    children: ReactNode,
+    Fallback: ReactNode,
+    requiredRoles: Array<string>
+}
 
-    useEffect(() => {
-        let ignore = false;
-        async function fetchRoles() {
-            const resp = await api.getMyRoles();
-            if (!ignore) setPermissions(resp);
-        }
-        fetchRoles();
-        return () => { ignore = true };
-    }, [api]);
+const Watchdog = (props: WatchdogProps) => {
+    const {roles, isLogged} = useUser()
 
     const granted = useMemo(() => {
-        return required.some(role => permissions.includes(role));
-    }, [permissions])
+        return isLogged && props.requiredRoles.some(role => roles.includes(role));
+    }, [roles])
 
     return (<>
-        {granted === true && <>{children}</> }
-        {(granted === false && Cls) && <><Cls /></> }
+        {(granted) ? props.children : <Fallback /> }
     </>)
-
 }
 
 const Fallback = () => {

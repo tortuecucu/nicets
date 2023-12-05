@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useMemo} from 'react';
-import { useApi } from '../contexts/ApiProvider';
-import {ServicePanel} from '../components/userServices/Panel';
-import Cookies from 'js-cookie';
-
+import { useState, useMemo } from 'react';
+import { ServicePanel } from '../components/userServices/Panel';
+import { useUser } from '../api/useUser';
 
 const UserProfile = () => {
     return (
@@ -46,63 +44,68 @@ const UserProfile = () => {
     );
 };
 
-const UserPanel = () => {
-    const api = useApi();
-    const [data, setData] = useState(null);
-    const [infos, setInfos] = useState(null);
 
-    useEffect(() => {
-        async function fetchData(){
-            const [data, err] = await api.getProfile();
-            if (err) {
-                console.error(err);
-            } else {
-                setData(data);
+type UserInfo = {
+    key: string,
+    value: string
+}
+
+type Mappable = {
+    [key: string]: any;
+};
+
+const UserPanel = () => {
+    const { profile } = useUser()
+    const [infos, setInfos] = useState<Array<UserInfo>>([]);
+
+    const getProperties = (obj: Mappable, props: Array<string>): Array<UserInfo> => {
+        return props.map(prop => {
+            const [key, display] = (Array.isArray(prop)) ? [prop[0], prop[1]] : [prop, prop]
+            return {
+                key: display,
+                value: obj[key]
             }
-        }
-        fetchData();
-    }, [])
+        })
+    }
 
     useMemo(() => {
-        if (data) {
-            const getProperties = (obj, props) => {
-                return props.map(prop => {
-                    const [key, display] = (Array.isArray(prop)) ? [prop[0], prop[1]] : [prop, prop]
-                    return {
-                        key: display,
-                        value: obj[key]
-                    }
-                })
-            }
-
+        if (profile) {
             setInfos([
-                ...getProperties(data, ['email', 'firstname', 'lastname']),
-                ...getProperties(data.company, [['name', 'company']]),
-                ...getProperties(data.site, [['name', 'site']])
+                ...getProperties(profile, ['email', 'firstname', 'lastname']),
+                ...getProperties(profile.company, ['name', 'company']),
+                ...getProperties(profile.site, ['name', 'site'])
             ]);
         }
-    }, [data])
+    }, [profile])
 
     return (<>
         <h3 className="mb-3 fw-normal">Votre profil</h3>
-        {infos && <UserInfosList infos={infos} />}
+        {infos && <UserInfosDumb infos={infos} />}
     </>)
 
 };
 
-const UserInfosList = ({ infos }) => {
-    const translator = (text) => {
-        const TRANSLATIONS = {
+type UserInfosDumbProps = {
+    infos: Array<UserInfo>
+}
+
+type MapString = {
+    [key: string]: string;
+};
+
+const UserInfosDumb = (props: UserInfosDumbProps) => {
+    const translator = (text: string): string => {
+        const TRANSLATIONS: MapString = {
             firstname: 'prénom',
             lastname: 'nom',
             company: 'société'
         }
-        const tranlation = TRANSLATIONS[text]
+        const tranlation : string = TRANSLATIONS[text]
         return (tranlation) ? tranlation : text
     }
     return (
         <ul className="list-group p-2">
-            {infos.map(info => {
+            {props.infos.map(info => {
                 return <li key={info.key} className="list-group-item"><span className="text-secondary fw-light">{translator(info.key)} </span>{info.value}</li>
             })}
 
@@ -111,12 +114,12 @@ const UserInfosList = ({ infos }) => {
 }
 
 const Logout = () => {
+    const { logOut } = useUser()
     const logoutCallBack = () => {
-        Cookies.remove('rat');
-        Cookies.remove('nat');
-        window.location.reload(true)
+        logOut()
+        window.location.reload()
     }
-    return(<>
+    return (<>
         <button onClick={logoutCallBack} className='btn btn-warning'>Se Déconnecter</button>
     </>)
 }

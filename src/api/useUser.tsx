@@ -1,5 +1,7 @@
 import { useApi } from "../contexts/ApiProvider"
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect} from "react"
+import Cookies from 'js-cookie';
+import { useMount } from "../hooks/useMount";
 
 type UserProfile = {
     id: number,
@@ -13,56 +15,56 @@ type UserProfile = {
     },
     company: {
         id: number,
-        name: string, 
+        name: string,
         trigra: string
     }
 }
 
-type Credentials = {
-    email: string,
-    code: number
-}
-
 const useUser = () => {
     const api = useApi()
-    const [credentials, setCredentials] = useState<Credentials>()
     const [profile, setProfile] = useState<UserProfile>()
     const [roles, setRoles] = useState<Array<string>>([])
+    const [isLogged, setIsLogged] = useState<boolean>(false)
+    const [isConnecting, setIsConnecting] = useState<boolean>(true)
+
+    //try to connect using JWT token
+    useMount(() => {
+        const connect = async () => {
+            setIsConnecting(true)
+            const success = await api.connect()
+            setIsLogged(success)
+            setIsConnecting(false)
+        }
+        connect()
+    })
 
     const invalidate = () => {
+        setIsLogged(false)
         setProfile(undefined)
-        setCredentials(undefined)
         setRoles([])
     }
 
     //updates user profile
     useEffect(() => {
         const fetchProfile = async () => {
-            if (credentials) {
-                const success = await api.login(credentials.email, credentials.code)
-                if (success) {
-                    const data = await api.getProfile()
-                    setProfile(data)
-                }
-            }
-            if (!profile) {
-                invalidate()
+            if (isLogged) {
+                const data = await api.getProfile()
+                setProfile(data)
             }
         }
         fetchProfile()
-    }, [credentials])
+    }, [isLogged])
 
     //updates user roles
-    useEffect(()=>{
+    useEffect(() => {
         const fetchRoles = async () => {
-            if (credentials) {
+            if (isLogged) {
                 const data = await api.getMyRoles()
                 setRoles([...data])
             }
         }
         fetchRoles()
-    }, [credentials])
-
+    }, [profile])
 
     /**
      * logs the user in
@@ -70,9 +72,13 @@ const useUser = () => {
      * @param code invitation code of the user
      */
     const logIn = (email: string, code: number): void => {
-        setCredentials({
-            email: email,
-            code: code
+        api.login(email, code)
+        .then((success: boolean) => {
+            if (success) {
+                setIsLogged(true)
+            } else {
+                invalidate()
+            }
         })
     }
 
@@ -81,17 +87,17 @@ const useUser = () => {
      */
     const logOut = (): void => {
         invalidate()
+        Cookies.remove('rat');
+        Cookies.remove('nat');
     }
 
     /**
      * indicates is an user is currently connected to backend service
      */
-    const isLogged = useMemo<boolean>(()=>{
-        return profile !== undefined
-    }, [profile])
 
-    return { profile, logIn, logOut, isLogged, roles }
+
+    return { profile, logIn, logOut, isLogged, roles, isConnecting }
 }
 
-export type {UserProfile}
-export { useUser}
+export type { UserProfile }
+export { useUser }
