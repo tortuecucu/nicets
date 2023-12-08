@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
-import SETTINGS from "../../data/StatusSettings";
+import SETTINGS from "../../assets/data/StatusSettings";
 import { SitesAffected } from "./OutageCommon";
-import LOCATIONS from "../../data/locations";
+import LOCATIONS from "../../assets/data/locations";
 import { CheckLg, Dash, GearFill } from 'react-bootstrap-icons';
 import { useApi } from "../../contexts/ApiProvider";
 

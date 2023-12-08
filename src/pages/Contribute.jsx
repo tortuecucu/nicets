@@ -7,7 +7,7 @@ const Contribute = () => {
             <div className="container bg-body rounded shadow-sm mt-5 px-4">
                 <div className="row flex-lg-row-reverse align-items-center border-bottom">
                     <div className="col-10 col-sm-8 col-lg-6">
-                        <img src="assets/people.png" className="d-block mx-lg-auto img-fluid" alt="NICE Improvement" width="700" height="500" loading="lazy"></img>
+                        <img src="/imgs/people.png" className="d-block mx-lg-auto img-fluid" alt="NICE Improvement" width="700" height="500" loading="lazy"></img>
                     </div>
                     <div className="col-lg-6 ps-4">
                         <h1 className="display-5 fw-bold text-body-emphasis lh-1 mb-3">Faisons-le, ensemble !</h1>

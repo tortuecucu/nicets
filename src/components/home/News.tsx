@@ -43,7 +43,7 @@ type NewsLinkProps = {
 function NewsLink(props: NewsLinkProps) {
     return (
         <a href={props.article.href} className="list-group-item list-group-item-action d-flex gap-3 py-3" target="_blank" rel='noreferrer'>
-            <img src='/assets/news.svg' alt='news'/>
+            <img src='/imgs/news.svg' alt='news'/>
             <div className="d-flex gap-2 w-100 justify-content-between">
                 <div>
                     <h6 className="mb-0">{props.article.title}</h6>

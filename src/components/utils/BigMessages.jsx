@@ -18,7 +18,7 @@ const BigMessage = ({ imageSrc, height, width, title, subtitle, children }) => {
 
 const OutageNotFound = () => {
     return (<>
-        <BigMessage title="Perturbation introuvable !" imageSrc="/assets/no-results.svg" height={300}>
+        <BigMessage title="Perturbation introuvable !" imageSrc="/imgs/no-results.svg" height={300}>
             <p className="col-lg-8 mx-auto fs-5 text-muted">Aucun dysfonctionnement ne correspond à votre recherche</p>
             <div className="d-flex gap-2 mb-5">
                 <a href="/" className="d-inline-flex align-items-center btn btn-primary btn-lg px-4" type="button">Retour à l'accueil</a>

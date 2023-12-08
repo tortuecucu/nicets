@@ -357,7 +357,7 @@ const Feedback = () => {
 
 const NoBallot = ({ ballot }) => {
     return (
-        <BigMessage imageSrc='/assets/closed.svg' width={430} title='Désolé, vous ne pouvez pas voter' subtitle={(ballot !== null) ? 'le vote est clos' : 'la panne est toujours en cours'} />
+        <BigMessage imageSrc='/imgs/closed.svg' width={430} title='Désolé, vous ne pouvez pas voter' subtitle={(ballot !== null) ? 'le vote est clos' : 'la panne est toujours en cours'} />
     )
 }
 

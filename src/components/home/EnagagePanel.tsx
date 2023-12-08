@@ -4,7 +4,7 @@ const EngagePanel = () => {
             <h5 className="pb-2 mb-4">Réagissez, participez, améliorez !</h5>
             <div className="d-flex flex-row">
                 <div className="image p-2">
-                    <img src="src/assets/people.png" width="150"></img>
+                    <img src="/imgs/people.png" width="150"></img>
                 </div>
                 <div className="ps-2">
                     <p className="lead fs-5">Aidez-nous à améliorer encore votre satisfaction</p>

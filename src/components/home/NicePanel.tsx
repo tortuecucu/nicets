@@ -4,7 +4,7 @@ const NicePanel = () => {
             <h5 className="pb-2 mb-4">Le projet NICE en 2 minutes</h5>
             <div className="d-flex flex-row">
                 <div className="image">
-                    <img src="src/assets/team.png" width="150"></img>
+                    <img src="/imgs/team.png" width="150"></img>
                 </div>
                 <div className="text">
                     <p className="lead fs-5">New Incident Cooperative Experience</p>

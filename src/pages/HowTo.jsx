@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { ArrowRightSquareFill } from "react-bootstrap-icons";
 
 import "./howto.css"
-import data from '../data/howto.json';
+import data from '../assets/data/howto.json';
 
 const PanelContext = createContext();
 const Wizard = ({ children }) => {

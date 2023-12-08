@@ -112,7 +112,7 @@ const LoginDumb = (props: DumbProps) => {
             <div className='login row my-3 shadow m-5'>
                 <div className='col-4 rounded-start text-light py-4 px-4 welcome'>
                     <h2 className="mb-3 fw-normal mt-4 text-center mb-4">Bienvenue dans NICE !</h2>
-                    <img className="img-fluid" src="src/assets/poc.png"></img>
+                    <img className="img-fluid" src="s/imgs/poc.png"></img>
                     <p className="lead mt-3 mt-4 text-center mt-4">Une gestion des incidents repensée, centrée sur vos besoins.</p>
                 </div>
                 <div className='col-8 rounded-end welcome py-4 px-4 '>

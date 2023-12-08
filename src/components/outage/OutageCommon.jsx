@@ -1,8 +1,8 @@
 import Tornado from "../data/Tornado";
-import tornadoData from '../../data/tornado.json';
+import tornadoData from '../../assets/data/tornado.json';
 import { useState, useMemo } from "react";
-import SETTINGS from "../../data/StatusSettings";
-import LOCATIONS from "../../data/locations";
+import SETTINGS from "../../assets/data/StatusSettings";
+import LOCATIONS from "../../assets/data/locations";
 
 const AffectedPanel = ({ outage }) => {
 
