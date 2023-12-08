@@ -5,7 +5,7 @@ import { OutagesPanel } from 'src/components/home/outages/OutagePanel';
 import { PerformancePanel } from "src/components/home/PerformancePanel";
 import { TipsPanel } from "src/components/home/TipsPanel";
 import { NicePanel } from 'src/components/home/NicePanel';
-import { EngagePanel } from 'src/components/home/EnagagePanel';
+import { EngagePanel } from 'src/components/home/EngagePanel';
 
 import "src/pages/home/home.css"
 
