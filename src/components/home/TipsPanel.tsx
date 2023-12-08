@@ -13,7 +13,7 @@ const TipsPanel = () => {
                 <h5 className="pb-2 mb-4">Besoin du support informatique ?</h5>
                 <div className="d-flex flex-row">
                     <div className="image">
-                        <img src="assets/wizard.png" width="150"></img>
+                        <img src="src/assets/wizard.png" width="150"></img>
                     </div>
                     <div className="ms-2">
                         <p className="lead fs-5">Formuler votre besoin efficacement est la clé pour obtenir le bon support au bon moment.</p>

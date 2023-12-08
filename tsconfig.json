@@ -22,7 +22,15 @@
 
     /* allows transition from js to jsx */
     "allowJs": true,
-    "checkJs": true
+    "checkJs": true,
+
+    //absolute path
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/components"],
+      "src": ["./src"]
+    },
+    "types": ["node"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

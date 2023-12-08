@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import Cookies from 'js-cookie';
-import configData from "../config.json"
+import { Parameters, useConfig } from "../hooks/config/useConfig";
 
 const ACCESS_TOKEN_COOKIE_NAME = "nat";
 const REFRESH_TOKEN_COOKIE_NAME = "rat";
@@ -9,13 +9,15 @@ const REFRESH_TOKEN_COOKIE_NAME = "rat";
 export default class ApiClient {
 
   constructor() {
-    this.base_url = configData.API_URL;
+    this.config = useConfig()
+    this.base_url = this.config.get(Parameters.API_URL);
     this.instance = axios.create({
       baseURL: this.base_url
     });
     this._accessToken = undefined;
     this.refreshToken = undefined;
     this.activeOutages = null;
+    
   }
 
   async refreshAccessToken() {
@@ -23,7 +25,7 @@ export default class ApiClient {
       if (!this.refreshToken) {
         return false;
       }
-      const res = await axios.post(`${configData.API_URL}/auth/refresh`, {
+      const res = await axios.post(`${this.config.get(Parameters.API_URL)}/auth/refresh`, {
         token: this.refreshToken
       });
       if (res.status === 200) {
@@ -111,7 +113,7 @@ export default class ApiClient {
    */
   async login(email, password) {
     try {
-      const res = await axios.post(`${configData.API_URL}/auth/login`, {
+      const res = await axios.post(`${this.config.get(Parameters.API_URL)}/auth/login`, {
         email: email,
         password: password
       });
@@ -228,7 +230,7 @@ export default class ApiClient {
   
     async ping() {
       let err = null;
-      var res = await axios.get(`${configData.API_URL}/ping`)
+      var res = await axios.get(`${this.config.get(Parameters.API_URL)}/ping`)
         .catch(e => {
           err = e;
         })

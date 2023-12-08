@@ -1,6 +1,6 @@
-import { useApi } from "../contexts/ApiProvider"
+import { useApi } from "../../contexts/ApiProvider"
 import { useState } from 'react';
-import { useMount } from "../hooks/useMount";
+import { useMount } from "../custom/useMount";
 
 //TODO: cache data for the session duration
 

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState, useRef } from 'react';
 import { Controller } from "react-hook-form"
-import { useDebounce } from '../../hooks/useDebounce';
+import { useDebounce } from '../../hooks/custom/useDebounce';
 
 const Searcher = (props) => {
     const [options, setOptions] = useState([])

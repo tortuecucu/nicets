@@ -1,5 +1,5 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import { Article, useNews } from '../../api/useNews';
+import { Article, useNews } from '../../hooks/backend/useNews';
 import { TimeAgo } from '../utils/TimeAgo';
 
 function News() {

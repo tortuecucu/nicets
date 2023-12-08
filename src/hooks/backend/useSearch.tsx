@@ -1,4 +1,4 @@
-import { useApi } from "../contexts/ApiProvider"
+import { useApi } from "../../contexts/ApiProvider"
 
 const useSearch = () => {
     const api = useApi()

@@ -3,7 +3,7 @@ import { UserForm } from "./UserForm"
 import Nav from 'react-bootstrap/Nav';
 import { useState, useContext } from "react";
 import { TitledContent } from "../../components/utils/TitledContent";
-import { useAdminUser } from "../../api/useAdminUser";
+import { useAdminUser } from "../../hooks/backend/useAdminUser";
 import { UserContext, UserContextWrapper } from "./UserContext";
 import { CodeRenewer } from "./CodeRenewer";
 

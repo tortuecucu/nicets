@@ -1,5 +1,5 @@
 
-import { useApi } from "../contexts/ApiProvider"
+import { useApi } from "../../contexts/ApiProvider"
 import type { AxiosPromise } from 'axios';
 
 type Map = { [key: string]: any }

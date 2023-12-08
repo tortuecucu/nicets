@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import { Searcher } from "../../components/utils/Searcher";
-import { useAdminUser } from "../../api/useAdminUser";
+import { useAdminUser } from "../../hooks/backend/useAdminUser";
 
 const UserContext = createContext({})
 

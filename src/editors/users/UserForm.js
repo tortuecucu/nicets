@@ -6,7 +6,7 @@ import { CompanySelect } from "../components/CompanySelect";
 import { useEffect } from "react";
 import PropTypes from 'prop-types';
 import { StatedSubmit } from "../../components/form/StatedSubmit";
-import { useStatedCallback } from "../../hooks/useStatedCallback";
+import { useStatedCallback } from "../../hooks/custom/useStatedCallback";
 import { RolesEditor } from "./RolesEditor";
 
 const UserForm = (props) => {

@@ -2,7 +2,7 @@ import { createContext, useState, useContext, useEffect, useRef } from "react";
 import { useParams } from 'react-router-dom';
 import { Button, Modal } from "react-bootstrap";
 import { useApi } from '../../contexts/ApiProvider';
-import configData from "../../config.json";
+import { Parameters, useConfig } from "../../hooks/config/useConfig";
 import { Toast } from 'primereact/toast';
 
 function Escalate({ outage }) {
@@ -339,8 +339,9 @@ const Impact = () => {
 
     const refChange = (reference) => {
         (async () => {
+            const config = useConfig()
             reference = String(reference).toUpperCase().trim();
-            const regex = new RegExp(configData.INCT_REGEX);
+            const regex = new RegExp(config.get(Parameters.INCT_REGEX));
             if (regex.test(reference)) {
                 const [outage, err] = await getOutage(reference);
                 if (err) {

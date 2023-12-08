@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react"
-import { useApi } from "../contexts/ApiProvider";
-import { ToastContext } from "../pages/Layout";
+import { useApi } from "../../contexts/ApiProvider";
+import { ToastContext } from "../../pages/Layout";
 import { useContext } from "react";
 
 const ACTIONS = {

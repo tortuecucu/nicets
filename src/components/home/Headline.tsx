@@ -1,6 +1,6 @@
 import { XCircle } from 'react-bootstrap-icons';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Headline as HeadlineItem, HeadlineAction, useHeadline } from '../../api/useHeadline';
+import { Headline as HeadlineItem, HeadlineAction, useHeadline } from '../../hooks/backend/useHeadline';
 import {useId} from "react"
 
 type HeadlineActionProps = {

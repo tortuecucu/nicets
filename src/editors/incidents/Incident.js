@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react"
 import { useApi } from "../../contexts/ApiProvider"
-import { useList } from "../../hooks/useList";
+import { useList } from "../../hooks/custom/useList";
 import { TableList } from "../../components/form/ListEdit";
 import { Button } from "react-bootstrap";
 import { ToastContext } from "../../pages/Layout";

@@ -3,7 +3,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { BoxArrowUpRight, PlusLg } from "react-bootstrap-icons";
 import { useState, useContext, useEffect } from "react";
 import { Modal } from "react-bootstrap";
-import { useList } from "../../../hooks/useList";
+import { useList } from "../../../hooks/custom/useList";
 import { ToastContext } from "../../../pages/Layout";
 import { CompactItem, CompactList, TableList } from "../../../components/form/ListEdit";
 import dayjs from "dayjs";

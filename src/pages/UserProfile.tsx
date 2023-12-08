@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { ServicePanel } from '../components/userServices/Panel';
-import { useUser } from '../api/useUser';
+import { useAuth } from '../hooks/backend/useAuth';
 
 const UserProfile = () => {
     return (
@@ -55,7 +55,7 @@ type Mappable = {
 };
 
 const UserPanel = () => {
-    const { profile } = useUser()
+    const { profile } = useAuth()
     const [infos, setInfos] = useState<Array<UserInfo>>([]);
 
     const getProperties = (obj: Mappable, props: Array<string>): Array<UserInfo> => {
@@ -114,7 +114,7 @@ const UserInfosDumb = (props: UserInfosDumbProps) => {
 }
 
 const Logout = () => {
-    const { logOut } = useUser()
+    const { logOut } = useAuth()
     const logoutCallBack = () => {
         logOut()
         window.location.reload()

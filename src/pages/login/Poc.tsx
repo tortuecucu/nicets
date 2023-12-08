@@ -2,20 +2,20 @@ import { useRef } from 'react';
 import { Button } from 'react-bootstrap';
 import Cookies from 'js-cookie';
 import { Toast } from 'primereact/toast';
-import { useUser } from '../../api/useUser';
+import { useAuth } from '../../hooks/backend/useAuth';
 import { useForm } from 'react-hook-form';
 import { ReactNode } from 'react'
 
-import "./login.css"
+import "./poc.css"
 
 interface FormData {
     email?: string,
     code?: string
 }
 
-const Login = () => {
+const Poc = () => {
     const toast = useRef(null);
-    const { logIn } = useUser()
+    const { logIn } = useAuth()
 
     const handleSubmit = (email: string, code: number): void => {
         logIn(email, code)
@@ -60,7 +60,7 @@ const LoginForm = (props: FormProps) => {
         defaultValues: async () => getDefaults()
     });
 
-    const submitCallback = async (data: FormData) => {
+    const submitCallback = async(data: FormData) => {
         const [dirtyMail, dirtyCode] = [data.email, data.code]
         const cleanedMail: string | undefined = ((dirty) => {
             if (dirty) {
@@ -89,7 +89,7 @@ const LoginForm = (props: FormProps) => {
     return (<>
         <form id="credentials" className="pb-3" onSubmit={handleSubmit(async (data) => await submitCallback(data))}>
             <div className="input-group input-group-lg mb-3">
-                <input id="email" type="email" className="form-control" placeholder="Votre email" {...register("email")}></input>
+                <input id="email" type="text" className="form-control" placeholder="Votre email" {...register("email")}></input>
                 <span className="input-group-text" id="basic-addon2">@safrangroup.com</span>
             </div>
             <div className="form-floating">
@@ -97,7 +97,7 @@ const LoginForm = (props: FormProps) => {
                 <label htmlFor="code">Code d'invitation</label>
                 <div id="codeHelp" className="form-text">Vous avez reçu ce code avec votre mail d'invitation</div>
             </div>
-            <Button id="submit" className='btn-lg w-100 mt-5 py-2 btn-success mb-0'>Je participe à NICE !</Button>
+            <Button type="submit" className='btn-lg w-100 mt-5 py-2 btn-success mb-0'>Je participe à NICE !</Button>
         </form>
     </>)
 }
@@ -120,7 +120,6 @@ const LoginDumb = (props: DumbProps) => {
                         <div className=' p-3 content rounded-2 shadow-sm'>
                             <h4 className="text-success">Une Preuve de Concept (POC)</h4>
                             <p className="my-1">Ce prototype vous permet de tester au plus tôt ce service, d'exprimer votre satisfaction et de guider son évolution.</p>
-                            <p className="my-1">A ce stade, l'application est donc incomplète, peut présenter des bugs et évolue constamment.</p>
                         </div>
                         <div className=' p-3 content rounded-2 shadow-sm ms-4'>
                             <h4 className="text-success">Comment participer ?</h4>
@@ -137,4 +136,4 @@ const LoginDumb = (props: DumbProps) => {
     );
 }
 
-export default Login;
+export default Poc;

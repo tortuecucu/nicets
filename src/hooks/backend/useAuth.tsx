@@ -1,7 +1,9 @@
-import { useApi } from "../contexts/ApiProvider"
+import { useApi } from "../../contexts/ApiProvider"
 import { useState, useEffect} from "react"
 import Cookies from 'js-cookie';
-import { useMount } from "../hooks/useMount";
+import { useMount } from "../custom/useMount";
+import { useNavigate } from "react-router-dom";
+
 
 type UserProfile = {
     id: number,
@@ -20,11 +22,12 @@ type UserProfile = {
     }
 }
 
-const useUser = () => {
+const useAuth = () => {
     const api = useApi()
+    const navigate = useNavigate()
     const [profile, setProfile] = useState<UserProfile>()
     const [roles, setRoles] = useState<Array<string>>([])
-    const [isLogged, setIsLogged] = useState<boolean>(false)
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
     const [isConnecting, setIsConnecting] = useState<boolean>(true)
 
     //try to connect using JWT token
@@ -32,14 +35,15 @@ const useUser = () => {
         const connect = async () => {
             setIsConnecting(true)
             const success = await api.connect()
-            setIsLogged(success)
+            console.info(success)
+            setIsAuthenticated(success)
             setIsConnecting(false)
         }
         connect()
     })
 
     const invalidate = () => {
-        setIsLogged(false)
+        setIsAuthenticated(false)
         setProfile(undefined)
         setRoles([])
     }
@@ -47,18 +51,18 @@ const useUser = () => {
     //updates user profile
     useEffect(() => {
         const fetchProfile = async () => {
-            if (isLogged) {
+            if (isAuthenticated) {
                 const data = await api.getProfile()
                 setProfile(data)
             }
         }
         fetchProfile()
-    }, [isLogged])
+    }, [isAuthenticated])
 
     //updates user roles
     useEffect(() => {
         const fetchRoles = async () => {
-            if (isLogged) {
+            if (isAuthenticated) {
                 const data = await api.getMyRoles()
                 setRoles([...data])
             }
@@ -75,7 +79,8 @@ const useUser = () => {
         api.login(email, code)
         .then((success: boolean) => {
             if (success) {
-                setIsLogged(true)
+                setIsAuthenticated(true)
+                navigate('/')
             } else {
                 invalidate()
             }
@@ -89,6 +94,7 @@ const useUser = () => {
         invalidate()
         Cookies.remove('rat');
         Cookies.remove('nat');
+        navigate('login')
     }
 
     /**
@@ -96,8 +102,8 @@ const useUser = () => {
      */
 
 
-    return { profile, logIn, logOut, isLogged, roles, isConnecting }
+    return { profile, logIn, logOut, isAuthenticated, roles, isConnecting }
 }
 
 export type { UserProfile }
-export { useUser }
+export { useAuth}

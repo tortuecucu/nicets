@@ -1,6 +1,6 @@
 import { lazy, Children, useState, Suspense, useMemo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { useMount } from "../../hooks/useMount";
+import { useMount } from "../../hooks/custom/useMount";
 import PropTypes from "prop-types"
 
 const Notice = ({ id, elementPath, element, dispatcher }) => {

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import configData from '../../config.json'
+import { Parameters, useConfig } from "../../hooks/config/useConfig";
 
 const BigMessage = ({ imageSrc, height, width, title, subtitle, children }) => {
     return (<>
@@ -33,7 +33,7 @@ const PageNotFound = () => {
       navigate(-1);
     }
     function goHome() {
-      navigate(configData.HOME_URL);
+      navigate(useConfig().get(Parameters.HOME_URL));
     }
     return (
         <BigMessage title={'Page non trouvée !'}>
