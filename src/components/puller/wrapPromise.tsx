@@ -1,14 +1,31 @@
-function wrapPromise(promise, listener) {
-    let status = 'pending'
-    let response
+
+export enum Status {
+    pending = "pending",
+    success = "success",
+    error= "error"
+}
+
+type ListenerFunc = (status: Status) => void
+
+type Suspender = Promise<void>
+
+type ReadFunc = () => Suspender | Error | any
+
+export type WrappedPromise = {
+    read: ReadFunc
+}
+
+function wrapPromise(promise: Promise<any>, listener: ListenerFunc | undefined): WrappedPromise {
+    let status: Status = Status.pending
+    let response: any
 
     const suspender = promise.then(
         (res) => {
-            status = 'success'
+            status = Status.success
             response = res
         },
         (err) => {
-            status = 'error'
+            status = Status.error
             response = err
         },
     )

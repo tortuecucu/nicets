@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import dayjs from "dayjs"
+import { StringMap } from "src/types/common"
 
-const mergeParams = (params, defaultValues) => {
+const mergeParams = (params: StringMap, defaultValues: StringMap) => {
     if (typeof params === 'object') {
         return {
             ...defaultValues,
@@ -18,22 +19,36 @@ const defaultOptions = {
     expires: undefined //if expires date is past then delete record
 }
 
+export type UseStorageOptions = {
+    local: boolean,
+    fallback: any,
+    expires: any
+}
+
 /**
  * stores the given parameter using the Storage API
- * @param {string} key name of theparameter
+ * @param {string} key name of the parameter
  * @param {object} options 
  * @returns react hook
  */
-const useStorage = (key, options) => {
+const useStorage = (key: string, options: UseStorageOptions) => {
     const params = mergeParams(options, defaultOptions)
     const storage = (options.local) ? localStorage : sessionStorage
 
     const initValue = () => {
-        const fallback = {
+
+        const fallback = { 
             created: undefined,
             data: params.fallback
         }
-        const record = JSON.parse(storage.getItem(key)) ?? fallback
+
+        let record: StringMap
+        const data = storage.getItem(key)
+        if (data) {
+            record = JSON.parse(data)
+        } else {
+            record = fallback
+        }
 
         if (params.expires && !params.local && dayjs(record.created).isBefore(dayjs())) {
             remove()

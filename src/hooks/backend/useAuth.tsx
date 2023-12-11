@@ -35,8 +35,9 @@ const useAuth = () => {
         const connect = async () => {
             setIsConnecting(true)
             const success = await api.connect()
-            console.info(success)
-            setIsAuthenticated(success)
+            if (success) {
+                setIsAuthenticated(success)
+            }
             setIsConnecting(false)
         }
         connect()

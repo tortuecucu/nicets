@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { LinkMail } from "../../components/utils/LinkMail";
 import { ClipboardButton } from "../../components/utils/ClipboardButton";
 import { UserContext } from "./UserContext";
-import { DataManager, ResponseContext } from "../../components/puller/DataPuller";
+import { DataManager, ResponseContext, useResponseContext } from "../../components/puller/DataPuller";
 
 const CodeRenewer = ({ onRenew }) => {
     const { user, resetUser } = useContext(UserContext)
@@ -41,7 +41,7 @@ const ProcessingPanel = ({user, resetUser, promise}) => {
 }
 
 const ResultPanel = ({ user, resetUser}) => {
-    const {data} = useContext(ResponseContext)
+    const {data} = useResponseContext()
 
     console.log('data', data)
 

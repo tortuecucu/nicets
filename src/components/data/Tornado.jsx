@@ -34,7 +34,7 @@ function NameLabel({ text }) {
 }
 
 export default function Tornado({ data, value, dimensions, title, leftValue }) {
-    //components to rendez are placed on buffers before rendering
+    //components to render are placed on buffers before rendering
     let [leftBars, leftValues, labels, rightValues, rightBars] = [[], [], [], [], []];
 
     //format data then creates components 

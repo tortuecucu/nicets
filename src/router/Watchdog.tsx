@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useAuth } from "../hooks/backend/useAuth";
 import { ReactNode, lazy } from 'react'
 import { Route } from "react-router-dom";
+import { ChildrenProp } from "src/types/common";
 
 const NoRightRole = () => {
     return (<>
@@ -19,7 +20,7 @@ const NoRightRole = () => {
 }
 
 type WatchdogProps = {
-    children: ReactNode,
+    children: ChildrenProp,
     fallback?: ReactNode,
     requiredRoles: Array<string>
 }

@@ -1,16 +1,18 @@
 import { useStorage } from "./useStorage"
 import { useState } from "react"
+import { PromiseProvider } from "src/types/common";
+import { UseStorageOptions } from "./useStorage";
 
 /**
- * cache the result f the promise using the Storage API
+ * cache the result of the promise using the Storage API
  * @param {Promise} promise 
  * @param {string} key 
  * @param {object} options 
  * @returns hook
  */
-const useStoredPromise = (promise, key, options) => {
+const useCachedPromise = (promise: PromiseProvider, key: string, options: .UseStorageOptions) => {
     const [result, setResult] = useStorage(key, options);
-    const [wasCalled, setWasCalled] = useState(false);
+    const [wasCalled, setWasCalled] = useState<boolean>(false);
 
     const wrapper = async () => {
         if (wasCalled) {
@@ -30,4 +32,4 @@ const useStoredPromise = (promise, key, options) => {
     return {wrapper, invalidate}
 }
 
-export {useStoredPromise}
+export {useCachedPromise}

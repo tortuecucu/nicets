@@ -1,9 +1,10 @@
-import PropTypes from "prop-types"
 import { Suspense, useMemo, createContext, useContext } from "react"
 import { ErrorBoundary } from "react-error-boundary"
-import wrapPromise from "./wrapPromise"
-import { ToastContext } from "../../pages/Layout"
+import wrapPromise, { Status, WrappedPromise } from "src/components/puller/wrapPromise"
 import { Alert, Spinner } from "react-bootstrap"
+import { AxiosResponse } from "axios"
+import { useToastContext } from "src/contexts/ToastContext"
+import { ChildrenProp } from "src/types/common"
 
 
 const DefaultLoader = () => {
@@ -21,7 +22,14 @@ const DefaultError = () => {
     )
 }
 
-const DataPuller = (props) => {
+type DataPullerProps = {
+    children: ChildrenProp,
+    show: boolean,
+    loadingElement: React.ReactElement,
+    errorElement: React.ReactElement
+}
+
+const DataPuller = (props: DataPullerProps) => {
     return (
         <ErrorBoundary fallback={props.errorElement}>
             {props.show &&
@@ -32,27 +40,40 @@ const DataPuller = (props) => {
         </ErrorBoundary>
     )
 }
-DataPuller.propTypes = {
-    children: PropTypes.element,
-    show: PropTypes.bool,
-    loadingElement: PropTypes.element,
-    errorElement: PropTypes.element,
-}
 DataPuller.defaultProps = {
     show: true,
     errorElement: <DefaultError />,
     loadingElement: <DefaultLoader />
 }
 
-const axiosSuccess = (codes) => {
-    return (data) => {
-        return codes.includes(data.status)
+const axiosSuccess = (codes: Array<number>): any => {
+    return (response: AxiosResponse): boolean => {
+        return codes.includes(response.status)
     }
 }
 
-const ResponseContext = createContext()
+type ResponseContextContent = {
+    data: any
+}
 
-const ResponseHandler = (props) => {
+const ResponseContext = createContext<ResponseContextContent>({
+    data: undefined
+})
+
+const useResponseContext = (): ResponseContextContent => {
+    const {data} = useContext(ResponseContext)
+    return {data}
+}
+
+type ResponseHandlerProps = {
+    wrappedPromise: WrappedPromise,
+    successFunc: (response: any) => boolean,
+    dataFunc: (response: any)=> any,
+    children: ChildrenProp,
+    fallback: React.ReactElement
+}
+
+const ResponseHandler = (props: ResponseHandlerProps) => {
     const { wrappedPromise, successFunc, dataFunc } = props
     const response = wrappedPromise.read()
 
@@ -71,22 +92,15 @@ const ResponseHandler = (props) => {
         </ResponseContext.Provider>
     )
 }
-ResponseHandler.propTypes = {
-    wrappedPromise: PropTypes.func,
-    successFunc: PropTypes.func,
-    dataFunc: PropTypes.func,
-    children: PropTypes.element,
-    fallback: PropTypes.element
-}
 ResponseHandler.defaultProps = {
-    successFunc: (response) => {
+    successFunc: (response: any): boolean => {
         if (response && response?.success!==undefined) {
             return response.success
         } else {
             return true
         }
     },
-    dataFunc: (response) => {
+    dataFunc: (response:any): any => {
         console.log('datafunc', response)
         if (response && response?.data!==undefined) {
             return response.data
@@ -97,14 +111,25 @@ ResponseHandler.defaultProps = {
     fallback: <p>incorrect data returned</p>
 }
 
-const DataManager = (props) => {
-    const { showToast } = useContext(ToastContext);
+export type DataManagerProps = {
+    toast?: any,
+    promise: ()=> Promise<any>,
+    children: ChildrenProp,
+    show?: boolean,
+    loadingElement?: React.ReactElement,
+    errorElement?: React.ReactElement,
+    successFunc?: (data: any)=> boolean,
+    fallback?: React.ReactElement
+}
 
-    const toastListener = (status) => {
+const DataManager = (props:DataManagerProps) => {
+    const { showToast } = useToastContext()
+
+    const toastListener = (status: Status) => {
         const display = () => {
             if (props.toast && props.toast[status]) {
                 const msg = props.toast[status]
-                showToast({ severity: status, summary: msg.title, detail: msg.message, life: 3000 })
+                showToast({ severity: "info", summary: msg.title, detail: msg.message, life: 3000 })
             }
         }
 
@@ -117,11 +142,11 @@ const DataManager = (props) => {
         }
     }
 
-    const wrapped = () => {
+    const wrapped = (): WrappedPromise => {
         if (props.toast) {
             return wrapPromise(props.promise(), toastListener)
         } else {
-            return wrapPromise(props.promise())
+            return wrapPromise(props.promise(), undefined)
         }
     }
 
@@ -135,16 +160,7 @@ const DataManager = (props) => {
 
 
 }
-DataManager.propTypes = {
-    toast: PropTypes.object,
-    promise: PropTypes.func,
-    children: PropTypes.element,
-    show: PropTypes.bool,
-    loadingElement: PropTypes.element,
-    errorElement: PropTypes.element,
-    successFunc: PropTypes.func,
-    fallback: PropTypes.element
-}
+
 DataManager.defaultProps = {
     toast: {
         success: {
@@ -158,4 +174,4 @@ DataManager.defaultProps = {
     }
 }
 
-export { DataPuller, axiosSuccess, ResponseContext, ResponseHandler, DataManager }
+export { DataPuller, axiosSuccess, ResponseContext, ResponseHandler, DataManager, useResponseContext }

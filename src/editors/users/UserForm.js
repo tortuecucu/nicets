@@ -5,7 +5,7 @@ import { LocationSelect } from "../components/LocationSelect";
 import { CompanySelect } from "../components/CompanySelect";
 import { useEffect } from "react";
 import PropTypes from 'prop-types';
-import { StatedSubmit } from "../../components/form/StatedSubmit";
+import { StatedSubmitButton } from "../../components/form/StatedSubmitButton.tsx";
 import { useStatedCallback } from "../../hooks/custom/useStatedCallback";
 import { RolesEditor } from "./RolesEditor";
 
@@ -85,10 +85,10 @@ const UserForm = (props) => {
                 </div>
                 <RolesEditor control={control} name="roles" />
                 <div className="hstack">
-                    <StatedSubmit state={state} buttonProps={{
+                    <StatedSubmitButton state={state} buttonProps={{
                         className: "ms-auto",
                         size: "lg"
-                        }} size="lg">{submitButtonLabel}</StatedSubmit>
+                        }} size="lg">{submitButtonLabel}</StatedSubmitButton>
                     {props.onReset && <Button variant="secondary" className="ms-2" size="lg" onClick={props.onReset}>Changer d'utilisateur</Button>}
                 </div>
             </form>

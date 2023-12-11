@@ -1,6 +1,7 @@
 import React, { useState, createContext, useContext } from "react"
 import { useMount } from "../custom/useMount";
 import { useApi } from "../../contexts/ApiProvider";
+import { ChildrenProp } from "src/types/common";
 
 export type OutageListItem = {
     id: number
@@ -54,7 +55,7 @@ const OutageListContext = createContext<OutageListContextContent>({
 })
 
 type OutageListContextProviderProps = {
-    children: React.ReactNode
+    children: ChildrenProp
 }
 
 const OutageListContextProvider = (props: OutageListContextProviderProps) => {

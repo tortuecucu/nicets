@@ -1,39 +1,36 @@
 import { XCircle } from 'react-bootstrap-icons';
-import { ErrorBoundary } from 'react-error-boundary';
-import { Headline as HeadlineItem, HeadlineAction, useHeadline } from '../../hooks/backend/useHeadline';
 import {useId} from "react"
+import { DataManager, useResponseContext } from '../puller/DataPuller';
+import {useHeadline, HeadlineType, HeadlineActionType} from 'src/hooks/backend/useHeadline'
 
 type HeadlineActionProps = {
-  actions: Array<HeadlineAction>
+  actions: Array<HeadlineActionType>
 }
 
 function HeadlineActionLink(props: HeadlineActionProps) {
-  const content = props.actions.map((action, index) =>
-    <a key={useId()} className={index === 0 ? 'btn btn-primary btn-sm' : 'btn btn-light btn-sm ms-3'} href={action.href} role="button">{action.label}</a>
-  );
   return (
-    <>{content}</>
+    <>{props.actions && props.actions.map((action, index) =>
+      <a key={useId()} className={index === 0 ? 'btn btn-primary btn-sm' : 'btn btn-light btn-sm ms-3'} href={action.href} role="button">{action.label}</a>
+    )}</>
   )
 }
 
-type HeadlinePanelProps = {
-  headline: HeadlineItem
-}
-
-function HeadlinePanel(props: HeadlinePanelProps) {
+function HeadlineContent() {
+  const {data} = useResponseContext()
+  const headline: HeadlineType = data
   return (
     <>
-      <div className={'headline rounded shadow-sm mt-4 p-2 ' + props.headline.type}>
+      <div className={'headline rounded shadow-sm mt-4 p-2 ' + headline.type}>
         <div className="d-flex">
           <div className="me-3 d-flex align-content-between">
             <XCircle className="my-auto" size={24} />
           </div>
           <div>
-            <p className="title my-0">{props.headline.title}</p>
-            <p className="description my-0">{props.headline.description}</p>
+            <p className="title my-0">{headline.title}</p>
+            <p className="description my-0">{headline.description}</p>
           </div>
           <div className="ms-auto py-2 me-2">
-            <HeadlineActionLink actions={props.headline.actions} />
+            <HeadlineActionLink actions={headline.actions} />
           </div>
         </div>
       </div>
@@ -42,13 +39,13 @@ function HeadlinePanel(props: HeadlinePanelProps) {
 }
 
 function Headline() {
-  const {headline} = useHeadline()
+  const {getHeadline} = useHeadline()
 
   return (
     <>
-      <ErrorBoundary fallback={<p>error on headline</p>}>
-        {(headline && Array.isArray(headline) && headline.length > 0) && <HeadlinePanel headline={headline} />}
-      </ErrorBoundary>
+        <DataManager promise={getHeadline}>
+          <HeadlineContent/>
+        </DataManager>
     </>
   )
 }

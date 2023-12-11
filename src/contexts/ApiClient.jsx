@@ -282,29 +282,7 @@ export default class ApiClient {
     return await this.postHandler('/api/outage/context/' + outageId, payload)
   }
 
-  /**
-* send a statement
-* @param  {Number} outageID id of the outage
-* @param  {bool} optIn true if user want to bubscribe, false for unsubscribe
-* @return {bool}      return true is succeeded
-*/
-  async subscribe(outageId, optIn) {
-    var [url, resp, err] = ['/api/outage/subscribe/' + outageId, null, null];
-    if (optIn) {
-      [resp, err] = await this.postHandler(url, {
-        outageid: outageId
-      })
-    } else {
-      [resp, err] = await this.deleteHandler(url);
-    }
 
-    if (err) {
-      return [null, err];
-    } else {
-      return [resp, null];
-    }
-
-  }
 
   async postNpsVote(ballotId, payload) {
     return await this.postHandler(`/api/vote/nps/${ballotId}`, payload)

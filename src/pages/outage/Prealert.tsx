@@ -1,6 +1,11 @@
+import { Outage } from "src/types/outage";
 import { UnfinishedFeature } from "../../components/utils/Alerts";
 
-function Prealert({outage}) {
+type PrealertProps = {
+    outage: Outage
+}
+
+function Prealert(props: PrealertProps) {
     return(
         <>
             <div className="my-3 p-3 bg-body rounded shadow-sm">

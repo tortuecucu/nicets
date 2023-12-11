@@ -1,4 +1,5 @@
-import React,  { useState, useContext, createContext } from 'react';
+import { useState, useContext, createContext } from 'react';
+import { ChildrenProp } from 'src/types/common';
 
 export type HelpdeskContextContent = {
     showModal: boolean,
@@ -11,7 +12,7 @@ const HelpdeskContext = createContext<HelpdeskContextContent>({
 });
 
 type HelpdeskContextProviderProps = {
-    children: React.ReactNode
+    children: ChildrenProp
 }
 
 const HelpdeskContextProvider = (props: HelpdeskContextProviderProps) => {

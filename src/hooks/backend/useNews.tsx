@@ -18,8 +18,7 @@ const useNews = () => {
     const api = useApi()
     const [news, setNews] = useState<Array<Article>>()
 
-    useMount(() => {
-        const fetchNews = async () => {
+    const fetchNews = async () => {
             const [rows, err] = await api.getNewslink();
             if (err) {
                 console.error(err);
@@ -31,9 +30,17 @@ const useNews = () => {
             }
 
         }
+
+    useMount(() => {        
         fetchNews()
     })
 
+    const getNews = async (): Promise<Array<Article> | undefined> => {
+        if (news === undefined) {
+          await fetchNews()
+        } 
+        return news
+    }
 
     const activeNews = (): Array<Article> | undefined => {
         return  news?.filter((article: Article) => {
@@ -48,7 +55,7 @@ const useNews = () => {
         })
     }
 
-    return { news, activeNews }
+    return { news, activeNews, getNews }
 }
 
 export { useNews }

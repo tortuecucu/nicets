@@ -12,7 +12,7 @@ const PROMISE_STATES = {
  * @param {number} resetDelay 
  * @returns hook
  */
-const useStatedCallback = (funcOrPromise, resetDelay = 2000) => {
+const useStatedCallback = (funcOrPromise: (...args: any[]) => any, resetDelay = 2000) => {
     const [state, setState] = useState(0)
     const [autoReset, setAutoReset] = useState(false)
 
@@ -36,7 +36,7 @@ const useStatedCallback = (funcOrPromise, resetDelay = 2000) => {
     }
 
     //executes the callback
-    const stateWrapper = (executor) => {
+    const stateWrapper = (executor: () => any) => {
         setState(1)
         const result = executor()  
         setState(2)
@@ -46,7 +46,7 @@ const useStatedCallback = (funcOrPromise, resetDelay = 2000) => {
         return result
     }
 
-    const run = async (...args) => {
+    const run = async (...args: any) => {
         console.log('run', funcOrPromise)
         setState(1)
         const result = await funcOrPromise(...args)
@@ -57,7 +57,7 @@ const useStatedCallback = (funcOrPromise, resetDelay = 2000) => {
         return result
     }
 
-    const runSync = (...args) => {
+    const runSync = (...args: any) => {
         return stateWrapper(
             () => {return funcOrPromise(...args)}
         )

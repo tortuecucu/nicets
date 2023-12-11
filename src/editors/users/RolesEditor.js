@@ -3,10 +3,10 @@ import { useId, useRef, useContext, useState} from "react";
 import { useApi } from "../../contexts/ApiProvider";
 import { Controller } from "react-hook-form";
 import { TitledContent } from "../../components/utils/TitledContent";
-import { DataManager, ResponseContext } from "../../components/puller/DataPuller";
+import { DataManager, ResponseContext, useResponseContext } from "../../components/puller/DataPuller";
 
 const RolesController = ({ control, name, userId }) => {
-    const {data} = useContext(ResponseContext)
+    const {data} = useResponseContext()
     const [roles, setRoles] = useState([...data])
     return(
         <Controller defaultValue={roles} render={({ field: { onChange } }) => {

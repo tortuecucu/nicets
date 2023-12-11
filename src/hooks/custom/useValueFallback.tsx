@@ -1,7 +1,7 @@
 
-const useValueFallback = (value: any, fallback: string ): string => {
+const useValueFallback = (value: string, fallback: string ): string => {
     try {
-        return String(value)
+        return value
     } catch (e) {
         console.error(e)
         return fallback

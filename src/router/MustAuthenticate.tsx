@@ -1,13 +1,14 @@
 import React from 'react'
 import { useAuth } from '../hooks/backend/useAuth'
 import { Navigate } from 'react-router-dom'
+import { ChildrenProp } from 'src/types/common'
 
 /**
  * 
  */
 type MustAuthenticateProps = {
     loginRoute: string,
-    children: React.ReactNode
+    children: ChildrenProp
 }
 
 /**
@@ -16,11 +17,11 @@ type MustAuthenticateProps = {
  * @param props MustAuthenticateProps
  */
 const MustAuthenticate = (props: MustAuthenticateProps): React.ReactNode => {
-    const { isAuthenticated } = useAuth()
+    const { isAuthenticated, isConnecting } = useAuth()
     return (<>
-        {props.children}
-        {/* { isAuthenticated &&  }
-        {isAuthenticated===false && <Navigate to={props.loginRoute}/>} */}
+        {isConnecting && <>connecting...</> }
+        {isAuthenticated && props.children}
+        {(!isAuthenticated && !isConnecting) && <Navigate to={props.loginRoute}/>}
     </>)
 }
 MustAuthenticate.defaultProps = {

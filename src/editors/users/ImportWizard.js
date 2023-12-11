@@ -7,7 +7,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Button } from "react-bootstrap";
 import { Tag } from 'primereact/tag';
 import { Trash } from "react-bootstrap-icons";
-import { DataManager, ResponseContext } from "../../components/puller/DataPuller";
+import { DataManager, ResponseContext, useResponseContext } from "../../components/puller/DataPuller";
 import { Alert } from "react-bootstrap";
 
 const InputForm = ({ onSubmit }) => {
@@ -133,7 +133,7 @@ const EditTableView = ({ users, onSubmit, onDelete }) => {
 }
 
 const ResultTable = ({ onRestart }) => {
-    const {data} = useContext(ResponseContext)
+    const {data} = useResponseContext()
     const clipboardCallback = () => {
         navigator.clipboard.writeText(JSON.stringify(data.map(r => {
             return {
