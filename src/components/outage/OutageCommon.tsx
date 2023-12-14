@@ -3,8 +3,16 @@ import tornadoData from '../../assets/data/tornado.json';
 import { useState, useMemo } from "react";
 import SETTINGS from "../../assets/data/StatusSettings";
 import LOCATIONS from "../../assets/data/locations";
+import { OutageType } from "src/types/outage";
+import { ToBeDefined } from "src/types/common";
 
-const AffectedPanel = ({ outage }) => {
+//TODO: correct this file
+
+type AffectedPanelProps = {
+    outage: OutageType
+}
+
+const AffectedPanel = (props: AffectedPanelProps) => {
 
     return (
         <div className="my-3 p-4 bg-body rounded shadow-sm">
@@ -13,25 +21,31 @@ const AffectedPanel = ({ outage }) => {
                 <span className="badge text-bg-danger ms-auto">120 utilisateurs affectés</span>
             </div>
             <h6 className="mt-4">Description du dysfonctionnement</h6>
-            <p className="lead mb-2 fs-5 ms-3">{outage.description}</p>
+            <p className="lead mb-2 fs-5 ms-3">{props.outage.description}</p>
             <h6 className="mt-4 mb-3">Sites affectés</h6>
-            <SitesAffected outage={outage} sites={LOCATIONS} />
+            <SitesAffected outage={props.outage} sites={LOCATIONS} />
             <h6 className="mt-4 mb-3">Retours des utilisateurs</h6>
             <Tornado data={tornadoData} title={""} value="count" dimensions={['result', 'site', 'connection']} leftValue="yes" />
             <hr className="hr" />
             <div className="hstack">
-                <ActionPanel outage={outage} compact={true} className={'ms-auto'} />
+                <ActionPanel outage={props.outage} compact={true} className={'ms-auto'} />
             </div>
         </div>
     )
 };
 
-const SitesAffected = ({ outage, sites, compact = false }) => {
-    const getVariant = (siteLabel) => {
+type SitesAffectedPRops = {
+    outage: OutageType,
+    sites: ToBeDefined,
+    compact?: boolean
+}
+
+const SitesAffected = (props: SitesAffectedPRops) => {
+    const getVariant = (siteLabel: string) => {
         var variant = 'light';
 
-        if (outage.locations) {
-            outage.locations.forEach(loc => {
+        if (props.outage.locations) {
+            props.outage.locations.forEach(loc => {
                 if (loc.name === siteLabel) {
                     if (loc.outagelocation.relationId === 2) {
                         variant = 'danger';
@@ -62,7 +76,11 @@ const SitesAffected = ({ outage, sites, compact = false }) => {
     </>)
 }
 
-const ImpactPanel = ({ outage }) => {
+type ImpactPanelProps = {
+    outage: OutageType
+}
+
+const ImpactPanel = (props: ImpactPanelProps) => {
     return (
         <div className="my-3 p-3 bg-body rounded shadow-sm">
             <h5 className="mb-4">Impact déclaré par le management</h5>
@@ -79,14 +97,20 @@ const ImpactPanel = ({ outage }) => {
             <p className="text-muted p-1">Aucun impact opérationnel n'a encore été déclaré.<br></br>Faites le dès maintenant !</p>
             <hr className="hr" />
             <div className="hstack">
-                <a href={'/impact/'+outage.id} className="btn btn-outline-secondary btn-sm ms-auto">Demander une escalation</a>
-                <a href={'/impact/'+outage.id}   className="btn btn-outline-primary btn-sm ms-2">Je complète les impacts</a>
+                <a href={'/impact/'+props.outage.id} className="btn btn-outline-secondary btn-sm ms-auto">Demander une escalation</a>
+                <a href={'/impact/'+props.outage.id}   className="btn btn-outline-primary btn-sm ms-2">Je complète les impacts</a>
             </div>
         </div>
     )
 }
 
-const ActionPanel = ({ outage, compact = false, className }) => {
+type ActionPanelProps = {
+    outage: OutageType,
+    compact?: boolean,
+    clasName?: string
+}
+
+const ActionPanel = (props: ActionPanelProps) => {
     const [settings, setSettings] = useState(null);
 
     useMemo(() => {
@@ -95,16 +119,16 @@ const ActionPanel = ({ outage, compact = false, className }) => {
 
 
     return (<>
-        {(settings && !compact) &&
+        {(settings && !props.compact) &&
             <div className="cta my-3 p-3 bg-body rounded shadow-sm ">
                 <p className="title my-0">Rejoignez les 154 utilisateurs qui nous aident !</p>
                 <p className="explanation fw-light">{settings.reason}</p>
-                <ActionButtons choices={settings.feedback.choices} outage={outage}/>
+                <ActionButtons choices={settings.feedback.choices} outage={props.outage}/>
             </div>
         }
-        {(settings && compact) &&
+        {(settings && props.compact) &&
             <div className={`hstack ${className}`}>
-                <ActionButtons choices={settings.feedback.choices} outage={outage} />
+                <ActionButtons choices={settings.feedback.choices} outage={props.outage} />
             </div>
         }
     </>);

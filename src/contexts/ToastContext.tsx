@@ -8,7 +8,8 @@ export type ToastContextContent = {
     showToast: (message: ToastMessage) => void,
     errorToast: (title: string, message: string) => void, 
     warningToast: (title: string, message: string) => void, 
-    successToast: (title: string, message: string) => void
+    successToast: (title: string, message: string) => void,
+    retryLater: () => void,
 }
 
 const ToastContext = createContext<ToastContextContent>({
@@ -16,6 +17,7 @@ const ToastContext = createContext<ToastContextContent>({
     errorToast: () => {},
     warningToast: () => {},
     successToast: () => {},
+    retryLater: () => {},
 })
 
 type ToastContextProviderProps = {
@@ -55,9 +57,13 @@ const ToastContextProvider = (props: ToastContextProviderProps) => {
         toast('success', title, message)
     }
 
+    const retryLater = () => {
+        errorToast('Oups, une erreur est survenue!', 'MErci de réessayer ultérieurement')
+    }
+
     return (
         <>
-            <ToastContext.Provider value={{ showToast, errorToast, warningToast, successToast }} children={props.children} />
+            <ToastContext.Provider value={{ showToast, errorToast, warningToast, successToast, retryLater }} children={props.children} />
             <Toast ref={toastRef} />
         </>
 

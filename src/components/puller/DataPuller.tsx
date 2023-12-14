@@ -52,16 +52,16 @@ const axiosSuccess = (codes: Array<number>): any => {
     }
 }
 
-type ResponseContextContent = {
-    data: any
+type ResponseContextContent<S> = {
+    data: S
 }
 
-const ResponseContext = createContext<ResponseContextContent>({
+const ResponseContext = createContext<ResponseContextContent<any>>({
     data: undefined
 })
 
-const useResponseContext = (): ResponseContextContent => {
-    const {data} = useContext(ResponseContext)
+function useResponseContext<S> (): ResponseContextContent<S>  {
+    const {data} = useContext<ResponseContextContent<S>>(ResponseContext)
     return {data}
 }
 

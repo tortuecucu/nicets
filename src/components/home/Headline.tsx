@@ -16,8 +16,7 @@ function HeadlineActionLink(props: HeadlineActionProps) {
 }
 
 function HeadlineContent() {
-  const {data} = useResponseContext()
-  const headline: HeadlineType = data
+  const {data: headline} = useResponseContext<HeadlineType>()
   return (
     <>
       <div className={'headline rounded shadow-sm mt-4 p-2 ' + headline.type}>

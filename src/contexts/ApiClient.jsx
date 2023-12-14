@@ -207,26 +207,7 @@ export default class ApiClient {
     }
   }
 
-    /**
-   * 
-   * @param {string} dirty input string to be cleaned
-   * @param {String[]} values list of valid values. comparison is case-insensitive
-   * @param {string} defVal default value returned if sanitization failed
-   * @returns 
-   */
-    sanitizeString(dirty, values, defVal) {
-      if (dirty == null) {
-        return defVal;
-      }
-      dirty = dirty.trim().toLowerCase();
-      for (let i = 0; i < values.length; i++) {
-        const v = String(values[i]).trim().toLowerCase();
-        if (v === dirty) {
-          return v;
-        }
-      }
-      return defVal;
-    }
+
   
     async ping() {
       let err = null;
@@ -264,19 +245,7 @@ export default class ApiClient {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /**
-* send a statement
-* @param  {Number} outageID id of the outage
-* @param  {string} name name of the state (affected, workaround, nominal)
-* @param  {string} value response given bu user (yes, no, undecided)
-* @return {bool}      return true is succeeded
-*/
-  async postState(outageId, state, value) {
-    return await this.postHandler('/api/outage/feedbacks/' + outageId, {
-      step: state,
-      feedback: value
-    })
-  }
+
 
   async postContext(outageId, payload) {
     return await this.postHandler('/api/outage/context/' + outageId, payload)
@@ -299,19 +268,6 @@ export default class ApiClient {
   async getFeedStats(outageId) {
     return await this.getHandler('/api/outage/feedbacks/stats/' + outageId, null)
   }
-
-  async postRevive(outageId) { //NEXT: code it as an outage event
-    return true;
-  }
-
-  async postImpact(outageID, payload) { //NEXT: code it
-    return true;
-  }
-
-  async getContext() { //NEXT: code it
-    return null;
-  }
-
 
 
 

@@ -5,7 +5,7 @@ import { OutageSummary } from 'src/components/outage/OutageSummary';
 import { DataManager, useResponseContext } from 'src/components/puller/DataPuller';
 import { Render, RenderOne } from 'src/components/utils/Render';
 import { OutageFetcher } from 'src/components/outage/OutageFetcher';
-import { Outage } from 'src/types/outage';
+import { OutageType } from 'src/types/outage';
 import { useOutage } from 'src/hooks/backend/useOutage';
 import { TitledContent } from 'src/components/utils/TitledContent';
 import { useState } from 'react';
@@ -24,11 +24,11 @@ function SubscriptionClosed() {
 }
 
 type ManageSubscriptionProps = {
-    outage: Outage
+    outage: OutageType
 }
 
 type WizardProps = {
-    outage: Outage
+    outage: OutageType
     optIn: boolean
 }
 
@@ -108,9 +108,8 @@ const ManageSubscription = (props: ManageSubscriptionProps) => {
  * @returns ReactElement
  */
 const ContentChooser = () => {
-    const { data } = useResponseContext()
+    const { data: outage } = useResponseContext<OutageType>()
     const { isEnded } = useOutage()
-    const outage: Outage = data as Outage
 
     return (<>
         <Render condition={(!isEnded(outage))} fallback={<SubscriptionClosed />}>

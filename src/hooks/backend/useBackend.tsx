@@ -6,7 +6,7 @@ type Map = { [key: string]: any }
 
 type Error = Map
 
-type HandlerPromise = Promise<[any, Error]>
+type HandlerPromise<S> = Promise<[S, Error]>
 
 type Handler = (
     url: string,
@@ -40,7 +40,7 @@ type Response = {
     query?: Map
 }
 
-const useBackend = (): BackendHook => {
+const useBackend = () => {
     const api = useApi()
 
     const get = (url: string, config?: Map): AxiosPromise<any> => {
@@ -63,7 +63,7 @@ const useBackend = (): BackendHook => {
         return api.getHandler(url, defaultValue)
     }
 
-    const postHandler = (url: string, data?: Map, config?: Map): HandlerPromise => {
+    function postHandler<S> (url: string, data?: Map, config?: Map): HandlerPromise<S> {
         return api.postHandler(url, data, config)
     }
 

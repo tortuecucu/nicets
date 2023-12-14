@@ -6,7 +6,7 @@ type BigMessageProps = {
     height?: number,
     width?: number,
     title: string,
-    subtitle?: number,
+    subtitle?: string,
     children?: React.ReactElement
 }
 
@@ -59,6 +59,8 @@ const PageNotFound = () => {
         </BigMessage>
     )
 }
+
+
 
 export { BigMessage, OutageNotFound, PageNotFound }
 

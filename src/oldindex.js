@@ -1,10 +1,10 @@
 import Notify from "./pages/outage/Notify";
-import Feedback from "./pages/outage/Feedback";
-import State from "./pages/outage/State";
-import Outage from "./pages/outage/Outage";
+import Feedback from "./pages/outage/satisfaction/Satisfaction";
+import State from "./pages/outage/userfeedback/State";
+import OutageType from "./pages/outage/Outage";
 
 const UserProfile = lazy(() => import('./pages/UserProfile'));
-const Impact = lazy(()=> import("./pages/outage/Impact"));
+const Impact = lazy(()=> import("./pages/outage/impact/Impact"));
 const Performance = lazy(() => import("./pages/Performance"));
 const HowTo = lazy(()=> import("./pages/HowTo"));
 const Contribute = lazy(()=> import("./pages/Contribute"));

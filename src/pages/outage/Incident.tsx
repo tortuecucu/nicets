@@ -6,12 +6,12 @@ import { Header, Tracker, SubHeader } from "../../components/outage/Header";
 import { TimelinePanel } from "../../components/outage/Timeline";
 import { DetailsPanel } from "../../components/outage/DetailsPanel";
 import { NewsPanel } from "../../components/outage/NewsPanel";
-import { Outage } from "src/types/outage";
+import { OutageType } from "src/types/outage";
 import { useOutage } from "src/hooks/backend/useOutage";
 import { Render } from "src/components/utils/Render";
 
 type OutageProps = {
-    outage: Outage
+    outage: OutageType
 }
 
 function Incident(props: OutageProps) {

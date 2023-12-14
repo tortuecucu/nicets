@@ -1,13 +1,14 @@
-import { Outage } from "src/types/outage"
+import { BackendResponse } from "src/types/common"
+import { OutageType } from "src/types/outage"
 
 type OutageResponse = [
-    Outage | null,
+    OutageType | null,
     Error | null
 ]
 
 const useOutage = () => {
 
-    const getById = async (id: number): Promise<OutageResponse> => {
+    const getById = async (id: number): BackendResponse<OutageType> => {
         return [
             {
                 id: id,
@@ -17,11 +18,37 @@ const useOutage = () => {
         ]
     }
 
-    const isEnded = (outage: Outage): boolean => {
+    const getByNumber = async (ref: string): BackendResponse<OutageType> => {
+        return getById(3)
+    }
+
+    const isEnded = (outage: OutageType): boolean => {
         return true //TODO: code it
     }
 
-    return {getById, isEnded}
+    const isValidRef = (ref: string): boolean => {
+        return true //TODO: code it
+        /**
+         * const config = useConfig()
+            reference = String(reference).toUpperCase().trim();
+            const regex = new RegExp(config.get(Parameters.INCT_REGEX));
+            if (regex.test(reference)) {
+                const [outage, err] = await getOutage(reference);
+                if (err) {
+                    console.error(err);
+                } else {
+                    setOutage(outage);
+                }                
+            }
+         * 
+         */
+    }
+
+    const getOutageId = async (ref: string): BackendResponse<number> => {
+        return [1, null]
+    }
+
+    return {getById, isEnded, getByNumber, isValidRef, getOutageId}
 }
 
 export {useOutage}

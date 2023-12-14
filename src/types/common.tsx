@@ -12,13 +12,18 @@ export type PromiseProvider = () => Promise<any>
 
 type BackendError = Error | null
 
-export type BackendResponse = Promise<[
-    response: any | null,
+export type BackendResponse<T> = Promise<[
+    response: T | null,
     error: BackendError
 ]>
 
 export type BackendBooleanResponse = Promise<[
     response: boolean | null,
+    error: BackendError
+]>
+
+export type BackendNumberResponse = Promise<[
+    response: number | null,
     error: BackendError
 ]>
 

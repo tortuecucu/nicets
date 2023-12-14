@@ -1,8 +1,8 @@
 import { ModelDatetime } from "./common";
-import { Outage, OutageStatus } from "./outage";
+import { OutageType, OutageStatus } from "./outage";
 import { Service } from "./service";
 
-export type Maintenance = Outage & {
+export type MaintenanceType = OutageType & {
     maintenance: {
         id: number,
         outageId: number

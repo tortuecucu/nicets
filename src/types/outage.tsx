@@ -1,6 +1,6 @@
 import { ModelDatetime, ToBeDefined } from "./common"
 
-export type Outage = {
+export type OutageType = {
     id: number,
     statusId: number,
     serviceId: number,

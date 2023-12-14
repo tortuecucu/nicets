@@ -25,24 +25,30 @@ export type UseStorageOptions = {
     expires: any
 }
 
+type Record<S> = {
+    created?: string,
+    data: S
+}
+
 /**
  * stores the given parameter using the Storage API
  * @param {string} key name of the parameter
  * @param {object} options 
  * @returns react hook
  */
-const useStorage = (key: string, options: UseStorageOptions) => {
-    const params = mergeParams(options, defaultOptions)
-    const storage = (options.local) ? localStorage : sessionStorage
+function useStorage<S>(key: string, options?: UseStorageOptions) {
+    const params = mergeParams(options || {}, defaultOptions)
+    const useLocal: boolean = (options && options?.local) || false
+    const storage = (useLocal) ? localStorage : sessionStorage
 
-    const initValue = () => {
+    const initRecord = (): Record<S> => {
 
-        const fallback = { 
+        const fallback = {
             created: undefined,
             data: params.fallback
         }
 
-        let record: StringMap
+        let record: Record<S>
         const data = storage.getItem(key)
         if (data) {
             record = JSON.parse(data)
@@ -58,20 +64,31 @@ const useStorage = (key: string, options: UseStorageOptions) => {
         }
     }
 
-    const [value, setValue] = useState(initValue)
+    const [record, setRecord] = useState<Record<S>>(initRecord)
 
     useEffect(() => {
-        storage.setItem(key, JSON.stringify({
-            created: dayjs().toJSON(),
-            data: value
-        }))
-    }, [value, key])
+        storage.setItem(key, JSON.stringify(record))
+    }, [record, key])
 
     const remove = () => {
         storage.removeItem(key)
     }
 
-    return [value, setValue, remove]
+    const set = (value: S): void => {
+        setRecord({
+            created: dayjs().toJSON(),
+            data: value
+        })
+    }
+
+    const get = ():S | undefined => {
+        if (record) {
+            return record.data
+        }
+        return undefined
+    }
+
+    return { record, get,  set, remove }
 
 }
 

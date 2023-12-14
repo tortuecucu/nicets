@@ -1,7 +1,7 @@
 import { useState, useRef, useContext } from "react"
-import {UnfinishedFeature} from "../../components/utils/Alerts"
-import { useApi } from "../../contexts/ApiProvider"
-import { ToastContext } from "../Layout"
+import {UnfinishedFeature} from "../../../../components/utils/Alerts"
+import { useApi } from "../../../../contexts/ApiProvider"
+import { ToastContext } from "../../../Layout"
 
 function OnSite() {
     return (
@@ -194,7 +194,7 @@ function Location() {
     )
 }
 
-function ContextForm({ outage, lastContext }) {
+function ContextForm({ outage }) {
     const form = useRef();
     const api = useApi();
     const {showToast} = useContext(ToastContext);
