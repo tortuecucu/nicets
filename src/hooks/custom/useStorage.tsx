@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-import dayjs from "dayjs"
 import { StringMap } from "src/types/common"
+import useDate from "../backend/useDate"
 
 const mergeParams = (params: StringMap, defaultValues: StringMap) => {
     if (typeof params === 'object') {
@@ -40,6 +40,7 @@ function useStorage<S>(key: string, options?: UseStorageOptions) {
     const params = mergeParams(options || {}, defaultOptions)
     const useLocal: boolean = (options && options?.local) || false
     const storage = (useLocal) ? localStorage : sessionStorage
+    const {isPast, sequelize, now} = useDate()
 
     const initRecord = (): Record<S> => {
 
@@ -56,7 +57,7 @@ function useStorage<S>(key: string, options?: UseStorageOptions) {
             record = fallback
         }
 
-        if (params.expires && !params.local && dayjs(record.created).isBefore(dayjs())) {
+        if (params.expires && !params.local && isPast(record.created)) {
             remove()
             return fallback
         } else {
@@ -76,7 +77,7 @@ function useStorage<S>(key: string, options?: UseStorageOptions) {
 
     const set = (value: S): void => {
         setRecord({
-            created: dayjs().toJSON(),
+            created: sequelize(now),
             data: value
         })
     }

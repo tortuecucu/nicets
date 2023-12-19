@@ -1,4 +1,4 @@
-const useStringSanitizer = () => {
+const useSanitizer = () => {
     const sanitize = (input: string, acceptedInput: string[], defaultValue: string): string => {
         try {
             const match = acceptedInput.find( v => v === input)
@@ -15,4 +15,4 @@ const useStringSanitizer = () => {
     return {sanitize}
 }
 
-export {useStringSanitizer}
+export {useSanitizer}

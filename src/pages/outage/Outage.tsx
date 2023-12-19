@@ -7,7 +7,7 @@ import { OutageNotFound } from "../../components/utils/BigMessages";
 import { Render, RenderOne } from "src/components/utils/Render";
 import { OutageFetcher } from "src/components/outage/OutageFetcher";
 import { OutageType } from "src/types/outage";
-import { OutageTypes } from "src/types/outagetypes";
+import { OutageTypes } from "src/types/outagetype";
 import { MaintenanceType } from "src/types/maintenance";
 import Maintenance  from "./Maintenance";
 

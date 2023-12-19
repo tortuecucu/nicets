@@ -2,17 +2,20 @@ import { createContext, useContext } from 'react';
 import ApiClient from './ApiClient';
 import { ChildrenProp } from 'src/types/common';
 
-type ApiContextContent = ApiClient | undefined
+type ApiContextContent = ApiClient 
 
 type ApiProviderProps = {
   children: ChildrenProp
 }
 
-const ApiContext = createContext<ApiContextContent>(undefined);
+const api = new ApiClient();
+const ApiContext = createContext<ApiContextContent>(api);
 
+/**
+ * Provides the API context for the application.
+ * @param props The props for the ApiProvider component.
+ */
 export default function ApiProvider(props: ApiProviderProps) {
-  const api = new ApiClient();
-
   return (
     <ApiContext.Provider value={api}>
       {props.children}
@@ -21,5 +24,5 @@ export default function ApiProvider(props: ApiProviderProps) {
 }
 
 export function useApi(): ApiContextContent {
-  return useContext(ApiContext);
+  return useContext<ApiContextContent>(ApiContext) as ApiContextContent;
 }

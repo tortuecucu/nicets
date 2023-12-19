@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
-import { OutageListItem } from '../../../../hooks/backend/useOutageList';
+import { OutageListItem } from 'src/types/outagelist';
 import { ItemAction } from './ItemAction';
 import { EtaSelector } from './ItemEta';
 import { useValueFallback } from '../../../../hooks/custom/useValueFallback';
@@ -32,7 +32,7 @@ function OutageItem(props: OutageSingleProp) {
                             <ItemAction outage={props.outage} />
                         </div>
                         <div className="">
-                            {/* <EtaSelector outage={props.outage} /> */} //TODO: reenable it after debug
+                            <EtaSelector outage={props.outage} />
                         </div>
                     </div>
                 </li>
@@ -56,7 +56,7 @@ function ItemDescription(props: OutageSingleProp) {
             <span className="occured text-black-50 ms-3"> <TimeAgo date={props.outage.startAt} /> </span>
         </p>
         <p className="system">
-            <span className="type text-capitalize fw-bold">{useValueFallback(props.outage.service?.name, 'application inconnue')}</span>
+            <span className="type text-capitalize fw-bold">{useValueFallback(props.outage.service?.name , 'application inconnue')}</span>
             <span className="punchline fw-medium ms-2">{props.outage.shortDescription}</span>
         </p>
     </>)

@@ -1,10 +1,13 @@
 import { ToBeDefined } from "./common"
+import { ModelDatetime } from "./model"
 
 export type ballot = {
     id: number
     name: string,
     type: ToBeDefined,
-    description: string
+    description: string,
+    endsAt: ModelDatetime,
+    deletedAt: ModelDatetime,
 }
 
 export type npsPayload = {

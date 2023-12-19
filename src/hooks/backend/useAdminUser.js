@@ -1,4 +1,3 @@
-// @flow
 
 import {useBackend} from "./useBackend"
 
@@ -178,3 +177,35 @@ const useAdminUser = (): Object  => {
 
 }
 export { useAdminUser }
+
+
+
+    // const createUsers = async (users: Array<ToBeDefined>) => {
+    //     return users.map(u => {
+    //         return {
+    //             ...u,
+    //             result: true,
+    //             code: 123456
+    //         }
+    //     })
+    // }
+
+    // return { createUsers }
+
+
+
+
+//   async getUSerRoles(userId) {
+//     return [
+//       {
+//         id: 1,
+//         name: 'granted role name',
+//         granted: true
+//       },
+//       {
+//         id: 2,
+//         name: 'ungranted role',
+//         granted: false
+//       }
+//     ]
+//   }

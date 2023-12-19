@@ -5,7 +5,7 @@ import { useVote } from "src/hooks/backend/useVote"
 import { DataManager, useResponseContext } from "src/components/puller/DataPuller"
 import { PageLoader } from "src/components/utils/PulseLoader"
 import { BigMessage } from "src/components/utils/BigMessages"
-import { OutageStatus } from "src/types/outagestatuses"
+import { OutageStatus } from "src/types/outagestatus"
 import { useStorage } from "src/hooks/custom/useStorage"
 
 export type SatisfactionLoaderProps = {

@@ -5,7 +5,7 @@ type MaintenanceProps = {
     maintenance: Maintenance
 }
 
-function Maintenance(props: MaintenanceProps) {
+function MaintenancePage(props: MaintenanceProps) {
     return (<>
         <div className="my-3 p-4 bg-body rounded shadow-sm">
             <h3>Maintenance en cours de {props.maintenance.service.name}</h3>
@@ -36,4 +36,4 @@ function Maintenance(props: MaintenanceProps) {
     </>)
 }
 
-export default Maintenance;
+export default MaintenancePage;

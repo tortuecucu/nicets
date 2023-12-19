@@ -1,12 +1,13 @@
 import ReactTimeAgo from "react-time-ago"
+import dayjs from "dayjs"
 
 type TimeAgoProps = {
-    date: number
+    date: number | string
 }
 
 const TimeAgo = (props: TimeAgoProps) => {
     return(
-        <ReactTimeAgo date={props.date}/>
+        <ReactTimeAgo date={dayjs(props.date).toDate()}/>
     )
 }
 

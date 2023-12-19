@@ -1,5 +1,3 @@
-
-
 export type Choice = {
     name: string,
     title: string,

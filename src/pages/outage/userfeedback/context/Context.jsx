@@ -194,6 +194,15 @@ function Location() {
     )
 }
 
+/**
+ * Renders a form component for providing context information about an outage.
+ * @param {Object} props - The component props.
+ * @param {Object} props.outage - The outage object.
+ * @returns {JSX.Element} - The rendered form component.
+ */
+function ContextForm({ outage }) {
+    // ... rest of the code
+}
 function ContextForm({ outage }) {
     const form = useRef();
     const api = useApi();

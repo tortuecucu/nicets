@@ -37,7 +37,16 @@ function useArray<S>(defaultValue: S[] | undefined) {
         })])
     }
 
-    return {array, set: setArray, push, filter, update: updateAt, remove, clear, updateItem}
+    function sort (sorter: (a: S, b: S) => number): void {
+        const sorted = array.sort(sorter)
+        setArray(sorted)
+    }
+
+    const find = (finder: (item: S) => Boolean): S | undefined => {
+        return array.find(finder)
+    }
+
+    return {array, set: setArray, push, filter, update: updateAt, remove, clear, updateItem, sort, find}
 }
 
 export {useArray}

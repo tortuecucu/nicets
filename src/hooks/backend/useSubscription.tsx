@@ -1,22 +1,28 @@
-import { BackendBooleanResponse } from "src/types/common"
-import { useBackend } from "./useBackend"
+import { BackendResponse } from "src/types/api"
+import { useApi } from "src/contexts/ApiProvider"
 
 const useSubscription = () => {
-    const { postHandler, deleteHandler } = useBackend()
+    const { postHandler, deleteHandler } = useApi()
   
-    const subscribe = async (outageId: number): BackendBooleanResponse => {
+    const subscribe = async (outageId: number): BackendResponse<boolean> => {
         const endpoint = '/api/outage/subscribe/' + outageId
-        return postHandler(endpoint, {
+        const [response, err] = await postHandler(endpoint, {
             outageid: outageId
-        }) as BackendBooleanResponse
+        }, undefined)
+
+        if (err) {
+            return [null, err]
+        }
+
+        return [(response !== null), null]
     }
 
-    const unsubscribe = async (outageId: number): BackendBooleanResponse => {
+    const unsubscribe = async (outageId: number): BackendResponse<boolean> => {
         const endpoint = '/api/outage/subscribe/' + outageId
-        return deleteHandler(endpoint) as BackendBooleanResponse
+        return deleteHandler(endpoint, undefined) 
     }
 
-    const manage = async (outageId: number, optIn: boolean): BackendBooleanResponse => {
+    const manage = async (outageId: number, optIn: boolean): BackendResponse<boolean> => {
         if (optIn) {
             return subscribe(outageId)
         } else {

@@ -1,18 +1,15 @@
-import dayjs from "dayjs"
-
-//TODO: finalize it
+import useDate from "src/hooks/backend/useDate"
 
 type FormattedDateProps = {
     date: string | number | Date
-
 }
 
 const FormattedDate = (props: FormattedDateProps) => {
-    const djs = dayjs(props.date)
+    const {format} = useDate()
     return (<>
         <span className="formatted-date">
-            <span className="fw-medium">{djs.format('LLL')}</span>
-            <span className="ago ms-1 text-secondary">({djs.format('LLL')})</span>
+            <span className="fw-medium">{format(props.date, 'LLL')}</span>
+            <span className="ago ms-1 text-secondary">(format(props.date))</span>
         </span>
     </>)
 }

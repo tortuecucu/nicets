@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom";
 import ContextForm from "./context/Context.jsx"
 import { OutageSummary } from "src/components/outage/OutageSummary.jsx";
 import { DoorClosed } from "react-bootstrap-icons";
-import { useStringSanitizer } from "src/hooks/custom/useStringSanitizer.js";
+import { useSanitizer } from "src/hooks/custom/useSanitizer.js";
 import { OutageFetcher } from "src/components/outage/OutageFetcher.js";
 import { StateCaptions, Verb } from "src/types/userstate.js";
 import { useUserState } from "src/hooks/backend/userstate/useUserState.js";
 import { useResponseContext } from "src/components/puller/DataPuller.js";
-import { OutageType } from "src/types/outagetypes.js";
+import { OutageType } from "src/types/outagetype.js";
 import { ResponseChooser } from "./ResponseChooser.js";
 
 type StateInnerProps = {

@@ -1,9 +1,15 @@
-import { BackendBooleanResponse, BackendResponse, ToBeDefined } from "src/types/common"
-import { OutageType } from "src/types/outage"
 import { ballot, npsBallots, npsForm, npsPayload } from "src/types/satisfaction"
+import { useApi } from "src/contexts/ApiProvider"
+import { BackendResponse } from "src/types/api"
+import { ToBeDefined } from "src/types/common"
+import useDate from "./useDate"
+import { OutageFields } from "src/types/outage"
+import { OutageStatusId } from "src/types/outagestatus"
 
 
 const useVote = () => {
+    const api = useApi()
+
     /**
      * add a new nps vote
      * @param ballotId id of the ballot
@@ -12,6 +18,10 @@ const useVote = () => {
      * @param payload additionnal information that explain the note
      */
     const npsVote = async (ballotId: number, vote: npsForm): BackendResponse<boolean> => {
+        const [_, err] = await api.postHandler<npsForm>(`/api/vote/nps/${ballotId}`, vote, undefined)
+        if (err) {
+            return [null, err]
+        }
         return [true, null]
     }
 
@@ -20,21 +30,39 @@ const useVote = () => {
      * @param outageId id of the ballot
      * @returns ballot object
      */
-    const getOutageBallot = async (outage: OutageType): BackendResponse<number | undefined> => {
-        return [0, null]
+    const getOutageBallot = async (outage: OutageFields): BackendResponse<number | undefined> => {
+        if (outage.ballotId) {
+            return [outage.ballotId, null]
+        }
+        const [ballotId, err] = await createOutageBallot(outage)
+        if (err) {
+            return [null, err]
+        }
+        return [ballotId, null]
+    }
+
+    const createOutageBallot = async (outage: OutageFields): BackendResponse<number | undefined> => {
+        if (outage.statusId && outage.statusId === OutageStatusId.NominalStated) {
+            return api.postHandler<number | undefined>('/api/vote/nps/new' + outage.id, undefined, undefined)
+        }
+        return [undefined, null]
     }
 
     /**
      * gets detailed information about a ballot
      * @param ballotId id of the ballot
      */
-    const getBallot = async (ballotId: number):  BackendResponse<ballot> => {}
+    const getBallot = async (ballotId: number): BackendResponse<ballot> => {
+        return api.getHandler('/api/vote/ballot/' + ballotId, undefined)
+    }
 
     /**
      * return current result of a voting ballot
      * @param ballotId id of the ballot
      */
-    const getNpsResults = async (ballotId: number): BackendResponse<npsBallots> => {}
+    const getNpsResults = async (ballotId: number): BackendResponse<npsBallots> => {
+        return api.getHandler(`/api/vote/nps/counting/${ballotId}`, undefined)
+    }
 
     /**
      * check if a ballot is still open
@@ -42,21 +70,24 @@ const useVote = () => {
      * @returns true if new votes are still accepted
      */
     const isBallotOpen = (ballot: ballot): boolean => {
-        return true //TODO: code it
-        // console.log(ballot,)
-        // if (ballot !== null && ballot !== false) {
-        //     if (ballot.endsAt && dayjs(ballot.endsAt).isAfter(dayjs())) {
-        //         return true;
-        //     } else if (ballot.endsAt === null) {
-        //         return true
-        //     } else {
-        //         return false
-        //     }
-        // }
-        // return false
+        const { now, parseDate } = useDate()
+        if (ballot !== null) {
+            if (ballot.endsAt && parseDate(ballot.endsAt).isAfter(now) && ballot.deletedAt === null) {
+                return true;
+            } else if (ballot.endsAt === null && ballot.deletedAt === null) {
+                return true
+            } else {
+                return false
+            }
+        }
+        return false
     }
 
-    return {npsVote, getBallot, getNpsResults, isBallotOpen, getOutageBallot}
+    const getFeedStats = (outageId: number): BackendResponse<ToBeDefined> => {
+        return api.getHandler('/api/outage/feedbacks/stats/' + outageId, undefined)
+    }
+
+    return { npsVote, getBallot, getNpsResults, isBallotOpen, getOutageBallot, getFeedStats }
 }
 
-export {useVote}
+export { useVote }
