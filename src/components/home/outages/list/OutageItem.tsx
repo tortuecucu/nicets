@@ -19,7 +19,7 @@ function OutageItem(props: OutageSingleProp) {
 
     return (
         <>
-            <ErrorBoundary fallback={<div>Error lors de l'affichage de l'outage</div>}>
+            <ErrorBoundary fallback={<div>Erreur lors de l'affichage de l'outage</div>}>
                 <li className="list-group-item outage" onClick={handleClick}>
                     <div className="hstack">
                         <div className="status">

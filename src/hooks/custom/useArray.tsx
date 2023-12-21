@@ -46,7 +46,15 @@ function useArray<S>(defaultValue: S[] | undefined) {
         return array.find(finder)
     }
 
-    return {array, set: setArray, push, filter, update: updateAt, remove, clear, updateItem, sort, find}
+    const set = (values: S[]) => {
+        setArray([
+            ...values
+        ])
+    }
+
+    const isEmpty = () => array.length === 0;
+
+    return {array, set, push, filter, update: updateAt, remove, clear, updateItem, sort, find, isEmpty}
 }
 
 export {useArray}

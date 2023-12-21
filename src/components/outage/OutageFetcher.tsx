@@ -1,15 +1,16 @@
 import { ChildrenProp } from "src/types/common"
 import { useOutage } from "src/hooks/backend/useOutage"
-import { DataManager } from "../puller/DataPuller"
-import { OutageType } from "src/types/outage"
+import { DataManager, ToastProp } from "../puller/DataPuller"
 import { PageLoader } from "../utils/PulseLoader"
 import { OutageNotFound } from "../utils/BigMessages"
+import { OutageRecord } from "src/hooks/backend/useOutage"
+
 
 type OutageFetcherProps = {
     id: number,
-    toast?: any,
+    toast?: ToastProp,
     children: ChildrenProp,
-    show?: boolean,
+    show: boolean,
     loadingElement?: React.ReactElement,
     errorElement?: React.ReactElement,
     fallback?: React.ReactElement
@@ -18,12 +19,13 @@ type OutageFetcherProps = {
 const OutageFetcher = (props: OutageFetcherProps) => {
     const {getById} = useOutage()
 
-    const fetchOutage = async (): Promise<OutageType|undefined> => {
+    const fetchOutage = async (): Promise<OutageRecord|undefined> => {
         const [outage, err] = await getById(props.id)
         if (err) {
+            console.error(err)
             return undefined
         } else {
-            return outage as OutageType
+            return outage as OutageRecord
         }
     }
 
@@ -35,7 +37,8 @@ const OutageFetcher = (props: OutageFetcherProps) => {
 }
 OutageFetcher.defaultProps = {
     loadingElement: <PageLoader />,
-    fallback: <OutageNotFound />
+    fallback: <OutageNotFound />,
+    show: true
 }
 
 export {OutageFetcher}

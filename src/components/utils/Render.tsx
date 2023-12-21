@@ -7,6 +7,16 @@ export type RenderProps = {
     fallback?: React.ReactElement
 }
 
+type RenderOneProps = {
+    fallback?: React.ReactElement,
+    children: React.ReactElement | Array<React.ReactElement>
+}
+
+type RenderElement = {
+    props: RenderProps
+}
+
+
 const evaluator = (statement: boolean | (() => boolean)) => {
     try {
         if (typeof statement === 'function') {
@@ -30,21 +40,17 @@ const Render = (props: RenderProps) => {
     }
 }
 
-type RenderOneProps = {
-    fallback?: React.ReactElement,
-    children: React.ReactElement | Array<React.ReactElement>
-}
+type ChildType = React.ReactElement | string | number | Iterable<ReactNode> | RenderElement
 
-type ChildType = React.ReactElement | string | number | Iterable<ReactNode> | RenderProps
-
-function isRender(child: ChildType): child is RenderProps {
-    return (child as RenderProps).condition !== undefined;
+function isRender(child: ChildType): child is RenderElement {
+    return (child as RenderElement).props.condition !== undefined;
+    
   }
 
 const RenderOne = (props: RenderOneProps) => {
-    const children: Array<ChildType> = React.Children.toArray(props.children)
-    const renders: Array<RenderProps> = children.filter<RenderProps>(isRender)
-    const firstRenderable: RenderProps | undefined = renders.find(r => evaluator(r.condition))
+    const items: Array<ChildType> = React.Children.toArray(props.children)
+    const renders: Array<RenderElement> = items.filter<RenderElement>(isRender)
+    const firstRenderable: RenderElement | undefined = renders.find(r => evaluator(r.props.condition))
 
     if (firstRenderable) {
         return(<>{firstRenderable}</>)

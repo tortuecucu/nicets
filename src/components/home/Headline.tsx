@@ -1,7 +1,7 @@
 import { XCircle } from 'react-bootstrap-icons';
-import {useId} from "react"
+import { useId } from "react"
 import { DataManager, useResponseContext } from '../puller/DataPuller';
-import {useHeadline, HeadlineType, HeadlineActionType} from 'src/hooks/backend/useHeadline'
+import { useHeadline, HeadlineType, HeadlineActionType } from 'src/hooks/backend/useHeadline'
 
 type HeadlineActionProps = {
   actions: Array<HeadlineActionType>
@@ -16,7 +16,7 @@ function HeadlineActionLink(props: HeadlineActionProps) {
 }
 
 function HeadlineContent() {
-  const {data: headline} = useResponseContext<HeadlineType>()
+  const { data: headline } = useResponseContext<HeadlineType>()
   return (
     <>
       <div className={'headline rounded shadow-sm mt-4 p-2 ' + headline.type}>
@@ -38,13 +38,20 @@ function HeadlineContent() {
 }
 
 function Headline() {
-  const {getHeadline} = useHeadline()
+  const { getHeadline } = useHeadline()
+
+  const successFunc = (response: HeadlineType): boolean => {
+    if (response === null || response === undefined) {
+      return false
+    }
+    return true
+  }
 
   return (
     <>
-        <DataManager promise={getHeadline}>
-          <HeadlineContent/>
-        </DataManager>
+      <DataManager promise={getHeadline} toast={undefined} loadingElement={<></>} successFunc={successFunc} fallback={<></>}>
+        <HeadlineContent />
+      </DataManager>
     </>
   )
 }

@@ -3,7 +3,7 @@ import useDate from "./useDate"
 import { useMount } from "../custom/useMount"
 import { Article } from "src/types/news"
 import { useArray } from "../custom/useArray"
-
+import dayjs from "dayjs"
 interface DeletePayload {
     id: number,
 }
@@ -36,7 +36,7 @@ interface UpdatePayload {
 
 const useNews = () => {
     const api = useApi()
-    const { array: articles, set: setNews, sort, remove, updateItem, push } = useArray<Article>([])
+    const { array: articles, set, remove, updateItem, push } = useArray<Article>(undefined)
     
     /**
      * Fetches articles from the backend.
@@ -48,8 +48,8 @@ const useNews = () => {
             console.error(err);
             return
         } else if (rows && rows.length > 1) {
-            setNews(rows)
-            sort((a: Article, b: Article) => Date.parse(b.startAt) - Date.parse(a.startAt))
+            const sorted = rows.sort((a: Article, b: Article) => dayjs(b.startAt).diff(dayjs(a.startAt)))
+            set(sorted)
         }
     }
 
@@ -69,7 +69,7 @@ const useNews = () => {
     }
 
     /**
-     * Retrieves live articles ffrom memory, otherwise rerieves it from the backend.
+     * Retrieves live articles from memory, otherwise rerieves it from the backend.
      * Live articles are articles that have started but not ended yet.
      * @returns A promise that resolves to an array of Article objects, or undefined if an error occurs.
      */

@@ -1,17 +1,21 @@
-import { ImpactPanel, AffectedPanel, ActionPanel } from "../../components/outage/OutageCommon";
+import { AffectedPanel } from "src/components/outage/AffectedPanel";
+import { ActionPanel } from "src/components/outage/ActionPanel";
+import { ImpactPanel } from "src/components/outage/ImpactPanel";
 import { UnfinishedFeature } from "../../components/utils/Alerts";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "../../components/utils/Error";
-import { Header, Tracker, SubHeader } from "../../components/outage/Header";
+import { Header } from "../../components/outage/Header";
+import { SubHeader } from "src/components/outage/SubHeader";
+import { Tracker } from "src/components/outage/Tracker";
 import { TimelinePanel } from "../../components/outage/Timeline";
 import { DetailsPanel } from "../../components/outage/DetailsPanel";
 import { NewsPanel } from "../../components/outage/NewsPanel";
-import { OutageType } from "src/types/outage";
 import { useOutage } from "src/hooks/backend/useOutage";
 import { Render } from "src/components/utils/Render";
+import { OutageRecord } from "src/hooks/backend/useOutage";
 
 type OutageProps = {
-    outage: OutageType
+    outage: OutageRecord
 }
 
 function Incident(props: OutageProps) {
@@ -31,6 +35,7 @@ const ActiveIncident = (props: OutageProps) => {
                 <ErrorBoundary fallback={<ErrorFallback />}>
                     <Header outage={props.outage}>
                         <Tracker outage={props.outage} />
+                        <></>
                     </Header>
                     <SubHeader outage={props.outage} />
                 </ErrorBoundary>

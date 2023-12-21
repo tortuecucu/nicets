@@ -22,7 +22,7 @@ const Home = () => {
         <div className="col">
           <TipsPanel />
           <EngagePanel />
-          <NicePanel/>
+          <NicePanel />
         </div>
       </div>
     </>

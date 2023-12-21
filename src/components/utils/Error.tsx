@@ -19,6 +19,7 @@ type ErrorFallbackProps = {
 }
 
 function ErrorFallback(props: ErrorFallbackProps) {
+    console.error(props.error)
     return (
         <>
             <div className="alert alert-danger d-flex align-items-center" role="alert">

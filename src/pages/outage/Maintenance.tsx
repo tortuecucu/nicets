@@ -1,8 +1,8 @@
 import { FormattedDate } from "src/components/utils/FormattedDate";
-import { Maintenance } from "src/types/maintenance";
+import { OutageRecord } from "src/hooks/backend/useOutage";
 
 type MaintenanceProps = {
-    maintenance: Maintenance
+    maintenance: OutageRecord
 }
 
 function MaintenancePage(props: MaintenanceProps) {

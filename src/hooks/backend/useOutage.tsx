@@ -7,7 +7,7 @@ import { Parameters, useConfig } from "../config/useConfig"
 import useDate from "./useDate"
 import { OutageStatusId } from "src/types/outagestatus"
 
-type OutageRecord = OutageEtaFields & {
+export type OutageRecord = OutageEtaFields & {
     id: number,
     statusId: number,
     typeId: number,

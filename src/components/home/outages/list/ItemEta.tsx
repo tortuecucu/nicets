@@ -1,19 +1,19 @@
 import type { OutageSingleProp } from './OutageItem';
 import useDate from 'src/hooks/backend/useDate';
-import { useArray } from 'src/hooks/custom/useArray';
 import { OutageEta } from 'src/types/outageeta';
 
 function EtaSelector(props: OutageSingleProp) {
     const {isPast} = useDate()
-    const {array, filter} = useArray(props.outage.etas || [])
-    filter((eta) => {
-        return !isPast(eta.earliestEta)
-    })
 
-    if (Array.isArray(array) && array.length > 0) {
-        return <ItemEta eta={array[0]}/>
-    } else {
-        return <></>
+    const etas = props.outage.etas || []
+
+    if (etas && Array.isArray(etas) && etas.length > 0) {
+        const actives = etas.filter((eta) => {
+            return !isPast(eta.earliestEta)
+        })
+        if (actives.length > 0) {
+            return <ItemEta eta={actives[0]} />
+        }
     }
 }
 
@@ -36,7 +36,5 @@ function ItemEta(props: ItemEtaProps) {
         </div>
     </>)
 }
-
-
 
 export {EtaSelector}

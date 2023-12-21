@@ -3,26 +3,31 @@ import { Parameters, useConfig } from '../../hooks/config/useConfig';
 import { HeartPulse, ExclamationTriangle, InfoCircle, Person, LightbulbFill, Speedometer2 } from "react-bootstrap-icons";
 import { useHelpdeskContext } from '../../contexts/HelpdeskContext';
 import { useForm } from 'react-hook-form';
-import { useSearch } from '../../hooks/backend/useSearch';
+import { useOutage } from 'src/hooks/backend/useOutage';
+import { useNavigate } from 'react-router-dom';
 
 function Head() {
   const config = useConfig()
+  const {getByNumber} = useOutage()
   const { setShowModal } = useHelpdeskContext()
   
   function handleHelpdeskClick() {
     setShowModal(true);
   }
 
-  const handleSearch = (search: string): void => {
+  const handleSearch = async (search: string): Promise<void> => {
     search = search.trim().toUpperCase()
-    const regex = new RegExp(config.get(Parameters.INCT_REGEX));
+    const regex = new RegExp(config.get(Parameters.INCT_REGEX) as string);
     if (regex.test(search)) {
-      const {getOutageByIncidentNumber} = useSearch()
-      const outageId = getOutageByIncidentNumber(search)
-      if (outageId!==undefined) {
-        window.location.href = config.get(Parameters.HOME_URL) + '/outage/' + outageId; //FIXME: use router instead
-      } else {
-        alert('Incident non trouvé !') //FIXME: use toast instead
+      const [outage, err] = await getByNumber(search)
+
+      if (err) {
+        console.error(err)
+      }
+
+      if (outage) {
+        const nav = useNavigate()
+        nav(config.get(Parameters.HOME_URL) + '/outage/' + outage.id)
       }
     }
   }
@@ -60,6 +65,11 @@ type HeadDumbProps = {
   onHelpdeskClicked: () => void
 }
 
+const gotoHome = () => {
+  const nav = useNavigate()
+  nav('/')
+}
+
 const HeadDumb = (props: HeadDumbProps) => {
   const config = useConfig()
   return (
@@ -79,11 +89,11 @@ const HeadDumb = (props: HeadDumbProps) => {
       </nav>
       <div className="nav-scroller bg-body shadow-sm">
         <nav className="nav">
-          <a className="nav-link active" title="Listes toutes les perturbations actuelles du système d'information" href={config.get('HOME_URL')}>Perturbations</a>
+          <a className="nav-link active" title="Listes toutes les perturbations actuelles du système d'information" onClick={gotoHome}>Perturbations</a>
           <a className="nav-link text-danger" title="Appeler le support informatique" href="#" onClick={props.onHelpdeskClicked}><ExclamationTriangle color="#DC3545" width={18} height={18} /> Une urgence ?</a>
-            <a className="nav-link" title="Vous assiste afin d'exprimer votre besoin de support de la meilleure manière" href={config.get('HOME_URL') + "/how-to"}><InfoCircle /> Assistant</a>
+            <a className="nav-link" title="Vous assiste afin d'exprimer votre besoin de support de la meilleure manière" href={config.get(Parameters.HOME_URL) as string + "/how-to"}><InfoCircle /> Assistant</a>
             <a className="nav-link ms-auto text-success fw-bold" href={config.get(Parameters.HOME_URL) + "/contribute"}><LightbulbFill /> J'améliore !</a>
-            <a className="nav-link" href={config.get(Parameters.HOME_URL) + "/dashboard"}><Speedometer2 /> Notre performance</a>
+            <a className="nav-link" href={config.get(Parameters.HOME_URL) + "/performances"}><Speedometer2 /> Notre performance</a>
             <a className="nav-link" href={config.get(Parameters.HOME_URL) + "/profile"}><Person /> Mon profil</a>
         </nav>
       </div>

@@ -26,12 +26,25 @@ const BigMessage = (props: BigMessageProps) => {
 }
 
 const OutageNotFound = () => {
+    const navigate = useNavigate();
+
+    function goBack() {
+        navigate(-1);
+    }
+    
+    function goHome() {
+        navigate('/');
+    }
+
     return (<>
         <BigMessage title="Perturbation introuvable !" imageSrc="/imgs/no-results.svg" height={300}>
             <>
-                <p className="col-lg-8 mx-auto fs-5 text-muted">Aucun dysfonctionnement ne correspond à votre recherche</p>
-                <div className="d-flex gap-2 mb-5">
-                    <a href="/" className="d-inline-flex align-items-center btn btn-primary btn-lg px-4" type="button">Retour à l'accueil</a>
+                <div className="d-flex flex-column w-100">
+                    <p className="lead mb-4">Aucun dysfonctionnement ne correspond à votre recherche</p>
+                    <div className="d-flex gap-2 mb-5 justify-content-sm-center">
+                        <button type="button" className="btn btn-primary btn-lg px-4 gap-3" onClick={goBack}>Retour</button>
+                        <button type="button" className="btn btn-outline-secondary btn-lg px-4" onClick={goHome}>Page d'accueil</button>
+                    </div>
                 </div>
             </>
         </BigMessage>
@@ -40,19 +53,24 @@ const OutageNotFound = () => {
 
 const PageNotFound = () => {
     const navigate = useNavigate();
+
     function goBack() {
         navigate(-1);
     }
+
     function goHome() {
-        navigate(useConfig().get(Parameters.HOME_URL) as To);
+        navigate('/');
     }
+
     return (
-        <BigMessage title={'Page non trouvée !'}>
+        <BigMessage title={'Page non trouvée !'} imageSrc="/imgs/no-results.svg" height={300}>
             <>
-                <p className="lead mb-4">The page you are looking for does not exists.</p>
-                <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                    <button type="button" className="btn btn-primary btn-lg px-4 gap-3" onClick={goBack}>Go Back</button>
-                    <button type="button" className="btn btn-outline-secondary btn-lg px-4" onClick={goHome}>Homepage</button>
+                <div className="d-flex flex-column">
+                    <p className="lead mb-4">L'adresse est incorrecte ou la page n'existe plus.</p>
+                    <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                        <button type="button" className="btn btn-primary btn-lg px-4 gap-3" onClick={goBack}>Retour</button>
+                        <button type="button" className="btn btn-outline-secondary btn-lg px-4" onClick={goHome}>Page d'accueil</button>
+                    </div>
                 </div>
             </>
 

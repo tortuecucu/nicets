@@ -1,28 +1,13 @@
 import { useApi } from "../../contexts/ApiProvider"
-import { useState } from "react"
 import Cookies from 'js-cookie';
-import { useMount } from "../custom/useMount";
 import { useNavigate } from "react-router-dom";
 
 const useAuth = () => {
     const api = useApi()
     const navigate = useNavigate()
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
-    const connect = async () => {
-        const success = await api.connect()
-        if (success) {
-            setIsAuthenticated(success)
-        }
-    }
-
-    //try to connect using JWT token
-    useMount(() => {
-        connect()
-    })
-
-    const invalidate = () => {
-        setIsAuthenticated(false)
+    const connect = () => {
+        return api.connect()
     }
 
     /**
@@ -34,19 +19,16 @@ const useAuth = () => {
         api.login(email, code)
             .then((success: boolean) => {
                 if (success) {
-                    setIsAuthenticated(true)
                     navigate('/')
-                } else {
-                    invalidate()
-                }
+                } 
             })
+            .catch(err => console.error(err))
     }
 
     /**
      * logs the current user out
      */
     const logOut = (): void => {
-        invalidate()
         Cookies.remove('rat');
         Cookies.remove('nat');
         navigate('login')
@@ -57,7 +39,7 @@ const useAuth = () => {
      */
 
 
-    return { logIn, logOut, isAuthenticated }
+    return { logIn, logOut, connect }
 }
 
 export { useAuth }

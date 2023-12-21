@@ -17,12 +17,14 @@ type MustAuthenticateProps = {
  * @param props MustAuthenticateProps
  */
 const MustAuthenticate = (props: MustAuthenticateProps): React.ReactNode => {
-    const { isAuthenticated, isConnecting } = useAuth()
-    return (<>
-        {isConnecting && <>connecting...</> }
-        {isAuthenticated && props.children}
-        {(!isAuthenticated && !isConnecting) && <Navigate to={props.loginRoute}/>}
-    </>)
+    const { connect } = useAuth()
+
+    if (connect() === true) {
+        return(<>{props.children}</>)
+    } else {
+        return(<Navigate to={props.loginRoute}/>)
+    }
+
 }
 MustAuthenticate.defaultProps = {
     loginRoute: "login"

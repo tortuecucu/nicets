@@ -1,10 +1,14 @@
 import { BackendResponse } from "src/types/api";
 import useOutageChildren from "./useOutageChildren";
 import { ModelDatetime } from "src/types/model";
+import { OutageRecord } from "./useOutage";
 
 interface OutageDetailRecord  {
     id: number,
-    outageId: number
+    outageId: number,
+    property: string,
+    value: string,
+    lang: string
 }
 
 interface AddPayload {
@@ -27,9 +31,9 @@ interface UpdatePayload {
 /**
  * Custom hook for fetching outage detail data.
  */
-const useOutageDetail = (outageId: number) => {
+const useOutageDetail = (outage: OutageRecord) => {
     const api = useOutageChildren<OutageDetailRecord>(
-        outageId,
+        outage.id,
         {
             get: {
                 url: '/api/outage/details/${outageId}'
@@ -76,12 +80,17 @@ const useOutageDetail = (outageId: number) => {
         return api.deleteOutageChild(detail);
     };
 
+    const get = (property: string): OutageDetailRecord | undefined => {
+        return api.children.find((detail) => detail.property === property);
+    }
+
     return {
         chidren: api.children,
         addOutageDetail,
         updateOutageDetail,
         deleteOutageDetail,
-        isLoading: api.isLoading
+        isLoading: api.isLoading,
+        get
     };
 };
 

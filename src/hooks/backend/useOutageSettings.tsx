@@ -1,7 +1,36 @@
-const SETTINGS = {
-    1: {
+import { OutageRecord } from "src/hooks/backend/useOutage";
+import { OutageStatusId } from "src/types/outagestatus";
+
+export type Settings = {
+    [key in OutageStatusId]: Setting
+}
+
+export type Setting = {
+    status: string,
+    actions: {
+        done: string,
+        ongoing: string,
+        next: string
+    },
+    userAttitude?: string,
+    reason: string,
+    feedback: {
+        default: FeedbackItem,
+        choices: FeedbackItem[]
+    }
+
+}
+
+export type FeedbackItem = {
+    label: string,
+    href: string,
+    variant: 'warning' | 'primary' | 'danger' | 'success'
+}
+
+const SETTINGS: Settings = {
+    [OutageStatusId.Prealert]: {
         status: 'prealert',
-        actions : {
+        actions: {
             done: 'Les utilisateurs et les services supports ont été alertés qu\'un dysfonctionnement peut exister',
             ongoing: 'En attente d\'incidents créés par les utilisateurs en appelant le Helpdesk',
             next: 'Détermination de la situation réelle de l\'application'
@@ -23,9 +52,9 @@ const SETTINGS = {
             ]
         }
     },
-    2: {
+    [OutageStatusId.ServiceDisrupted]: {
         status: 'outage',
-        actions : {
+        actions: {
             done: 'La chaine de commandement adaptée au dysfonctionnement a été activée',
             ongoing: 'Les composants de l\'appplication sont en cours de vérification afin d\'identifier des causes de panne',
             next: 'Un plan de retour au nominal sera défini en fonction des données technqiues et des retours utilisateurs'
@@ -52,9 +81,9 @@ const SETTINGS = {
             ]
         }
     },
-    3: {
+    [OutageStatusId.Correcting]: {
         status: 'correcting',
-        actions : {
+        actions: {
             done: 'Les composants de l\'application ont été vérifiés et des écarts ont été mis en évidence',
             ongoing: 'Le plan de retour au nominal est engagé. Des actions techniques sont actuellement menées',
             next: 'Les paramètres vitaux seront vérifiés à nouveau puis suivis dans la durée pour garantir un fonctionnement nominal'
@@ -81,9 +110,9 @@ const SETTINGS = {
             ]
         }
     },
-    4: {
+    [OutageStatusId.NominalConfirming]: {
         status: 'nominalConfirming',
-        actions : {
+        actions: {
             done: 'Des actions de correction ont été réalisées afin de rétablir un fonctionnement nominal',
             ongoing: 'Nous vérifions auprès des utilsiateurs le fonctionnement de l\'application',
             next: 'Si les retours sont concluants, nous engagerons des actions de pilotage qualité'
@@ -110,9 +139,9 @@ const SETTINGS = {
             ]
         }
     },
-    5: {
+    [OutageStatusId.Workaround]: {
         status: 'workaround',
-        actions : {
+        actions: {
             done: '',
             ongoing: '',
             next: ''
@@ -122,28 +151,31 @@ const SETTINGS = {
         feedback: {
             default: {
                 label: '',
-                href: ''
+                href: '',
+                variant: 'primary'
             },
             choices: [
                 {
                     label: '',
-                    href: ''
+                    href: '',
+                    variant: 'primary'
                 },
                 {
                     label: '',
-                    href: ''
+                    href: '',
+                    variant: 'primary'
                 }
             ]
         }
     },
-    6: {
+    [OutageStatusId.NominalStated]: {
         status: 'nominalClosed',
-        actions : {
+        actions: {
             done: 'La panne a été corrigée et le fonctionnement nominal validé par les utilsiateurs',
             ongoing: 'Détermination de la satisfaction des utilsateurs',
             next: 'Retour d\'expérience afin d\'améliorer notre gestion des incidents'
         },
-        userAttitude: null,
+        userAttitude: undefined,
         reason: 'Votre niveau de satisfaction est notre mesure de performance',
         feedback: {
             default: {
@@ -159,7 +191,35 @@ const SETTINGS = {
                 }
             ]
         }
+    },
+    [OutageStatusId.Closed]: {
+        status: "",
+        actions: {
+            done: "",
+            ongoing: "",
+            next: ""
+        },
+        userAttitude: undefined,
+        reason: "",
+        feedback: {
+            default: {
+                label: "",
+                href: "",
+                variant: "success"
+            },
+            choices: []
+        }
     }
 }
 
-export default SETTINGS
+const useOutageSettings = (outage: OutageRecord) => {
+
+    function getSetting(): Setting {
+        return SETTINGS[outage.statusId as OutageStatusId]
+    }
+
+
+    return {getSetting}
+}
+
+export {useOutageSettings}

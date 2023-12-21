@@ -63,8 +63,8 @@ const ToastContextProvider = (props: ToastContextProviderProps) => {
 
     return (
         <>
-            <ToastContext.Provider value={{ showToast, errorToast, warningToast, successToast, retryLater }} children={props.children} />
             <Toast ref={toastRef} />
+            <ToastContext.Provider value={{ showToast, errorToast, warningToast, successToast, retryLater }} children={props.children} />
         </>
 
     )

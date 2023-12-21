@@ -25,7 +25,7 @@ interface DeletePayload {
     outageId?: number,
 }
 
-interface OutageLocationRecord {
+export interface OutageLocationRecord {
     id: number,
     outageId: number,
     locationId: number,
@@ -54,6 +54,10 @@ function useOutageLocation(outageId: number) {
         }
     });
 
+    const find = (func: (location: OutageLocation) => OutageLocationRecord): OutageLocationRecord | undefined => {
+        return api.children.find(func) as OutageLocationRecord | undefined;
+    }
+
     const addOutageLocation = async ( location: AddPayload): BackendResponse<OutageLocationRecord> => {
         return api.addOutageChild(location) as BackendResponse<OutageLocationRecord>
     };
@@ -71,6 +75,7 @@ function useOutageLocation(outageId: number) {
         addOutageLocation,
         updateOutageLocation,
         deleteOutageLocation,
+        find
     };
 }
 
