@@ -1,8 +1,8 @@
-import { OutageType } from "src/types/outage";
+import { OutageRecord } from "src/hooks/backend/useOutage";
 import { UnfinishedFeature } from "../../components/utils/Alerts";
 
 type PrealertProps = {
-    outage: OutageType
+    outage: OutageRecord
 }
 
 function Prealert(props: PrealertProps) {

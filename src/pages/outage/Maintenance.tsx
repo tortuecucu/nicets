@@ -5,6 +5,8 @@ type MaintenanceProps = {
     maintenance: OutageRecord
 }
 
+//FIXME: fix the date properties issue
+
 function MaintenancePage(props: MaintenanceProps) {
     return (<>
         <div className="my-3 p-4 bg-body rounded shadow-sm">
@@ -12,7 +14,7 @@ function MaintenancePage(props: MaintenanceProps) {
 
             <div className="d-flex flex-row mb-3 mt-3">
                 <div className="">
-                    <img src="/assets/maintenance.jpeg"></img>
+                    <img src="/imgs/maintenance.jpeg"></img>
                 </div>
                 <div className="mt-3">
                     <p className="lead mb-4">{props.maintenance.description}</p>

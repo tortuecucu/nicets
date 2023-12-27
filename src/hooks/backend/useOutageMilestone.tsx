@@ -24,7 +24,7 @@ interface DeletePayload {
     id: number
 }
 
-type OutageMilestoneRecord = { //'id', 'outageId', 'name', 'label', 'occured', 'milestoneId'],
+export type OutageMilestoneRecord = { //'id', 'outageId', 'name', 'label', 'occured', 'milestoneId'],
     id: number,
     outageId: number,
     name: string,
@@ -43,7 +43,7 @@ type OutageMilestoneRecord = { //'id', 'outageId', 'name', 'label', 'occured', '
 }
 
 const useOutageMilestone = (outageId: number) => {
-    const api = useOutageChildren<OutageMilestone>(outageId, {
+    const api = useOutageChildren<OutageMilestoneRecord>(outageId, {
         get: {
             url: '/api/outage/milestone/${outageId}'
         },
@@ -59,15 +59,15 @@ const useOutageMilestone = (outageId: number) => {
     });
 
     const addOutageMilestone = async ( milestone: AddPayload): BackendResponse<OutageMilestoneRecord> => {
-        return api.addOutageChild(milestone) as BackendResponse<OutageMilestoneRecord>
+        return api.addOutageChild(milestone as unknown as OutageMilestoneRecord) as BackendResponse<OutageMilestoneRecord>
     };
 
     const updateOutageMilestone = async (milestone: EditPayload): BackendResponse<OutageMilestoneRecord> => {
-        return api.updateOutageChild(milestone as OutageMilestone) as BackendResponse<OutageMilestoneRecord>
+        return api.updateOutageChild(milestone as unknown as OutageMilestoneRecord) as BackendResponse<OutageMilestoneRecord>
     };
 
     const deleteOutageMilestone = async (milestone: DeletePayload): BackendResponse<boolean> => {
-        return api.deleteOutageChild(milestone as OutageMilestone)
+        return api.deleteOutageChild(milestone as unknown as OutageMilestoneRecord)
     };
 
     return {

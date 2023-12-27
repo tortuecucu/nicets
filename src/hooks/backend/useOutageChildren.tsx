@@ -36,11 +36,10 @@ function useOutageChildren<T extends OutageChild> (outageId: number, endpoints: 
      * @returns The complete endpoint URL.
      */
     const getEndpoint = (url: string, child: OutageChild | undefined = undefined): string => {
-        url.replace('${outageId}', outageId.toString())
+        url = url.replace('${outageId}', outageId.toString())
         if (child && child !== undefined) {
-            url.replace('${childId}', child.id.toString())
+            url = url.replace('${childId}', child.id.toString())
         }
-        
         return url
     }
 

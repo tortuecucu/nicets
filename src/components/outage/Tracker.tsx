@@ -83,7 +83,7 @@ type TrackerProps = {
 }
 
 const Tracker = (props: TrackerProps) => {
-    const progress = ITEMS.find(item => item.statusId === props.outage.statusId)?.progress.toString() || '0' + '%';
+    const progress = (ITEMS.find(item => item.statusId === props.outage.statusId)?.progress.toString() || '0') + '%';
 
     return (
         <div className="mx-3 stepper bg-body my-3">

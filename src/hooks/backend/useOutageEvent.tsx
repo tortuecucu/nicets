@@ -1,11 +1,17 @@
 import { BackendResponse } from "src/types/api";
 import useOutageChildren from "./useOutageChildren";
 import { useApi } from "src/contexts/ApiProvider";
-import { sequelizeParanoid } from "src/types/model";
+import { ModelDatetime, sequelizeParanoid } from "src/types/model";
 
 type OutageEvent = {
     id: number,
     outageId: number,
+    label: string,
+    typeId: number,
+    description: string,
+    payload?: string,
+    type?: OutageEventType
+    createdAt: string
 }
 
 type OutageEventType = {
@@ -35,11 +41,13 @@ interface OutageEventRecord extends sequelizeParanoid {
     outageId: number,
     payload?: string,
     eventtypeId: number,
+    eventtype?: OutageEventType,
+    occured: ModelDatetime
 }
 
 
 const useOutageEvent = (outageId: number) => {
-    const api = useOutageChildren<OutageEvent>(outageId, {
+    const api = useOutageChildren<OutageEventRecord>(outageId, {
         get: {
             url: '/api/outage/${outageId}/events'
         },
@@ -55,15 +63,15 @@ const useOutageEvent = (outageId: number) => {
     });
 
     const addOutageEvent = async (event: AddPayload): BackendResponse<OutageEventRecord> => {
-        return api.addOutageChild(event) as BackendResponse<OutageEventRecord>
+        return api.addOutageChild(event as unknown as OutageEventRecord) as BackendResponse<OutageEventRecord>
     };
 
     const updateOutageEvent = async (event: OutageEvent): BackendResponse<OutageEventRecord> => {
-        return api.updateOutageChild(event) as BackendResponse<OutageEventRecord>
+        return api.updateOutageChild(event as unknown as OutageEventRecord) as BackendResponse<OutageEventRecord>
     };
 
     const deleteOutageEvent = async (event: DelePayload): BackendResponse<boolean> => {
-        return api.deleteOutageChild(event as OutageEvent)
+        return api.deleteOutageChild(event as unknown as OutageEventRecord)
     };
 
     const getEventTypes = async (): BackendResponse<OutageEventType[]> => {

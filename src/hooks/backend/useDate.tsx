@@ -21,9 +21,10 @@ const useDate = () => {
         return date.isBefore(dayjs())
     }
 
-    const format = (date: string | number | dayjs.Dayjs | Date, format: string): string => (
-        dayjs(date).format(format)
-    )
+    const format = (date: string | number | dayjs.Dayjs | Date, format: string): string => {
+        return dayjs(date).format(format)
+    }
+
 
     const ago = (date: string | number | dayjs.Dayjs | Date): string => {
         return dayjs(date).fromNow()
