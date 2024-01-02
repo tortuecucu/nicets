@@ -1,16 +1,18 @@
 import React from 'react';
-import { Parameters, useConfig } from '../../hooks/config/useConfig';
+import { Parameters, useConfig } from '../../../hooks/config/useConfig';
 import { HeartPulse, ExclamationTriangle, InfoCircle, Person, LightbulbFill, Speedometer2 } from "react-bootstrap-icons";
-import { useHelpdeskContext } from '../../contexts/HelpdeskContext';
+import { useHelpdeskContext } from '../../../contexts/HelpdeskContext';
 import { useForm } from 'react-hook-form';
 import { useOutage } from 'src/hooks/backend/useOutage';
 import { useNavigate } from 'react-router-dom';
+import { LayoutMode } from 'src/types/layout';
+import { Render } from 'src/components/utils/Render';
 
-function Head() {
+function Head(props: { mode: LayoutMode }) {
   const config = useConfig()
-  const {getByNumber} = useOutage()
+  const { getByNumber } = useOutage()
   const { setShowModal } = useHelpdeskContext()
-  
+
   function handleHelpdeskClick() {
     setShowModal(true);
   }
@@ -32,7 +34,7 @@ function Head() {
     }
   }
 
-  return (<HeadDumb form={<SearchForm onSubmit={handleSearch} />} onHelpdeskClicked={handleHelpdeskClick} />)
+  return (<HeadDumb mode={props.mode} form={<SearchForm onSubmit={handleSearch} />} onHelpdeskClicked={handleHelpdeskClick} />)
 }
 
 type SearchFormProps = {
@@ -62,7 +64,8 @@ const SearchForm = (props: SearchFormProps) => {
 
 type HeadDumbProps = {
   form: React.ReactNode,
-  onHelpdeskClicked: () => void
+  onHelpdeskClicked: () => void,
+  mode: LayoutMode
 }
 
 const gotoHome = () => {
@@ -83,20 +86,22 @@ const HeadDumb = (props: HeadDumbProps) => {
           <div className="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             </ul>
-            {props.form}
+            {props.mode !== LayoutMode.PUBLIC && props.form}
           </div>
         </div>
       </nav>
-      <div className="nav-scroller bg-body shadow-sm">
-        <nav className="nav">
-          <a className="nav-link active" title="Listes toutes les perturbations actuelles du système d'information" onClick={gotoHome}>Perturbations</a>
-          <a className="nav-link text-danger" title="Appeler le support informatique" href="#" onClick={props.onHelpdeskClicked}><ExclamationTriangle color="#DC3545" width={18} height={18} /> Une urgence ?</a>
+      <Render condition={props.mode !== LayoutMode.PUBLIC}>
+        <div className="nav-scroller bg-body shadow-sm">
+          <nav className="nav">
+            <a className="nav-link active" title="Listes toutes les perturbations actuelles du système d'information" onClick={gotoHome}>Perturbations</a>
+            <a className="nav-link text-danger" title="Appeler le support informatique" href="#" onClick={props.onHelpdeskClicked}><ExclamationTriangle color="#DC3545" width={18} height={18} /> Une urgence ?</a>
             <a className="nav-link" title="Vous assiste afin d'exprimer votre besoin de support de la meilleure manière" href={config.get(Parameters.HOME_URL) as string + "/how-to"}><InfoCircle /> Assistant</a>
             <a className="nav-link ms-auto text-success fw-bold" href={config.get(Parameters.HOME_URL) + "/contribute"}><LightbulbFill /> J'améliore !</a>
             <a className="nav-link" href={config.get(Parameters.HOME_URL) + "/performances"}><Speedometer2 /> Notre performance</a>
             <a className="nav-link" href={config.get(Parameters.HOME_URL) + "/profile"}><Person /> Mon profil</a>
-        </nav>
-      </div>
+          </nav>
+        </div>
+      </Render>
     </>
   )
 }

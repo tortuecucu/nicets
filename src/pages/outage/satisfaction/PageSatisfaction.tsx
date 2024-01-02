@@ -77,7 +77,7 @@ const SatisfactionContent = () => {
  * loads required data using SatisfactionLoader
  * then displays the required panel with SatisfactionContent
  */
-const Satisfaction = () => {
+const PageSatisfaction = () => {
     const { id: dirtyId } = useParams();
     let id = 0
     if (dirtyId) {
@@ -91,4 +91,4 @@ const Satisfaction = () => {
     </>)
 }
 
-export default Satisfaction;
+export default PageSatisfaction;

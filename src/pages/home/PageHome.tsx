@@ -9,7 +9,7 @@ import { EngagePanel } from 'src/components/home/EngagePanel';
 
 import "src/pages/home/home.css"
 
-const Home = () => {
+const PageHome = () => {
   return (
     <>
       <Headline />
@@ -29,4 +29,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default PageHome;

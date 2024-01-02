@@ -5,7 +5,6 @@ import { OutageSummary } from 'src/components/outage/OutageSummary';
 import { DataManager, useResponseContext } from 'src/components/puller/DataPuller';
 import { Render, RenderOne } from 'src/components/utils/Render';
 import { OutageFetcher } from 'src/components/outage/OutageFetcher';
-import { OutageType } from 'src/types/outage';
 import { useOutage } from 'src/hooks/backend/useOutage';
 import { TitledContent } from 'src/components/utils/TitledContent';
 import { useState } from 'react';
@@ -118,7 +117,7 @@ const ContentChooser = () => {
     </>)
 }
 
-const Notify = () => {
+const PageNotify = () => {
     const { id: dirtyId } = useParams();
 
     let id: number = 0
@@ -136,4 +135,4 @@ const Notify = () => {
     )
 };
 
-export default Notify;
+export default PageNotify;

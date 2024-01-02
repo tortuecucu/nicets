@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { ArrowRightSquareFill } from "react-bootstrap-icons";
 
 import "./howto.css"
-import data from '../assets/data/howto.json';
+import data from '../../assets/data/howto.json';
 
 const PanelContext = createContext();
 const Wizard = ({ children }) => {
@@ -43,7 +43,7 @@ const Wizard = ({ children }) => {
     )
 }
 
-const HowTo = () => {
+const PageAssistant = () => {
     return (
         <>
             <div className="my-3 p-3 bg-body rounded shadow-sm m-5">
@@ -179,4 +179,4 @@ function WizardFactory({ data }) {
     )
 }
 
-export default HowTo;
+export default PageAssistant;

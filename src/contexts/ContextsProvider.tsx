@@ -1,7 +1,7 @@
 import { HelpdeskContextProvider } from "./HelpdeskContext"
 import { ToastContextProvider } from "./ToastContext"
 import ApiProvider from "./ApiProvider"
-import { CallHelpdeskModal } from "src/components/common/CallHelpdeskModal"
+import { CallHelpdeskModal } from "src/pages/layout/common/CallHelpdeskModal"
 
 type ContextsProviderProps = {
     children: React.ReactElement

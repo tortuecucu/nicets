@@ -1,6 +1,6 @@
 import { Check } from "react-bootstrap-icons";
 
-const Nice = () => {
+const PageNice = () => {
 
     return (
         <>
@@ -315,4 +315,4 @@ const Nice = () => {
     )
 }
 
-export default Nice;
+export default PageNice;

@@ -9,7 +9,7 @@ import { useMount } from 'src/hooks/custom/useMount';
 import { RenderOne } from 'src/components/utils/Render';
 import { OutageFetcher } from 'src/components/outage/OutageFetcher';
 
-const Impact = () => {
+const PageImpact = () => {
     const { id: dirtyId } = useParams();
     const {isValidRef, getOutageId} = useOutage()
     const [id, setId] = useState<number>(0)
@@ -60,4 +60,4 @@ const ImpactContent = () => {
     </>)
 }
 
-export default Impact;
+export default PageImpact;

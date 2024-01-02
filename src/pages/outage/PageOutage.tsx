@@ -32,7 +32,7 @@ const ContentSwitch = () => {
     </>)
 }
 
-const Outage = () => {
+const PageOutage = () => {
     const { id: dirtyId } = useParams();
 
     let id: number = 0
@@ -52,4 +52,4 @@ const Outage = () => {
     );
 };
 
-export default Outage;
+export default PageOutage;

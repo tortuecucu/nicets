@@ -53,8 +53,8 @@ const useAccount = () => {
      * Retrieves the user roles from the backend.
      * @returns {Promise<BackendResponse<Array<string>>>} The response from the backend containing an array of roles.
      */
-    const getRoles = async (): BackendResponse<Array<string>> => {
-        return [['admin', 'incident-admin', 'data-admin', 'user-admin'], null];
+    const getRoles = (): string[] => {
+        return ['admin', 'incident-admin', 'data-admin', 'user-admin'];
         //FIXME: return this.getHandler('/api/me/roles', []) //NEXT: uncomment and test
     }
 

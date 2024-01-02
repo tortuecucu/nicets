@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import { ArrowRight } from 'react-bootstrap-icons';
 
-const Contribute = () => {
+const PageContribute = () => {
     return (
         <>
             <div className="container bg-body rounded shadow-sm mt-5 px-4">
@@ -122,4 +121,4 @@ const Contribute = () => {
 
 
 
-export default Contribute;
+export default PageContribute;

@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import QRCode from "react-qr-code";
-import { useHelpdeskContext } from '../../contexts/HelpdeskContext';
+import { useHelpdeskContext } from '../../../contexts/HelpdeskContext';
 
 const CallHelpdeskModal = () => {
     const {showModal, setShowModal} = useHelpdeskContext()

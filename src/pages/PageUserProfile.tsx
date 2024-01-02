@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { ServicePanel } from '../components/userServices/Panel';
 import { useAuth } from '../hooks/backend/useAuth';
 
-const UserProfile = () => {
+const PageUserProfile = () => {
     return (
         <>
             <div className="container p-3 bg-body rounded shadow-sm mt-5">
@@ -124,4 +124,4 @@ const Logout = () => {
     </>)
 }
 
-export default UserProfile;
+export default PageUserProfile;

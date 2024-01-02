@@ -57,7 +57,7 @@ function OutageClosed() {
   )
 }
 
-const State = () => {
+const PageState = () => {
   const { verb: dirtyVerb, outageid, value } = useParams();
   const { sanitize } = useStringSanitizer()
   const { getVerb } = useUserState()
@@ -76,4 +76,4 @@ const State = () => {
   )
 }
 
-export default State;
+export default PageState;

@@ -1,6 +1,6 @@
 
 import { useMemo } from "react"
-import { RenderOne } from "../utils/Render"
+import { RenderOne } from "../../../components/utils/Render"
 
 type SearchProp = {
     search: string

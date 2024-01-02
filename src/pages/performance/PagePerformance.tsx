@@ -1,7 +1,7 @@
 import { ConeStriped } from 'react-bootstrap-icons';
 import './performance.css'
 
-const Performance = () => {
+const PagePerformance = () => {
     return (
         <>
             <div className="container bg-body rounded shadow-sm mt-5 px-4">
@@ -31,5 +31,5 @@ const Performance = () => {
     );
 };
 
-export default Performance;
+export default PagePerformance;
 
