@@ -24,7 +24,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route index element={<Base />} />
-            <Route path="admin" element={<LazyLoader path="src/editors/AdminLayout" />}>
+            <Route path="admin" element={<LazyLoader path="src/admin/AdminLayout" />}>
               <Route path="users" element={<>users</>} />
             </Route>
             <Route path="login" element={<AuthenticationPage />} />

@@ -9,10 +9,10 @@ const Performance = lazy(() => import("./pages/Performance"));
 const HowTo = lazy(() => import("./pages/HowTo"));
 const Contribute = lazy(() => import("./pages/Contribute"));
 const Nice = lazy(() => import("./pages/Nice"));
-const NewsEditor = lazy(() => import("./editors/news/News"));
-const IncidentEditor = lazy(() => import("./editors/incidents/Incident"));
-const MaintenanceEditor = lazy(() => import("./editors/maintenance/Maintenance"));
-const UsersEditor = lazy(() => import("./editors/users/UsersEditor"));
+const NewsEditor = lazy(() => import("./admin/news/News"));
+const IncidentEditor = lazy(() => import("./admin/incidents/Incident"));
+const MaintenanceEditor = lazy(() => import("./admin/maintenance/Maintenance"));
+const UsersEditor = lazy(() => import("./admin/users/UsersEditor"));
 
 export default function App() {
   return (
