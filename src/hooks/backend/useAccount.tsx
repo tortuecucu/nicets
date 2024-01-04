@@ -1,7 +1,7 @@
 import { BackendResponse } from "src/types/api";
 import { useApi } from "src/contexts/ApiProvider";
 
-type UserProfile = {
+export type UserProfile = {
     id: number,
     firstname: string,
     lastname: string,
@@ -14,11 +14,15 @@ type UserProfile = {
     site: {
         id: number,
         name: string,
+        trigram: string,
         countryCode: string
-    }
+    },
+    managerId?: number,
+    lang: string,
+    roles?: string[],
 }
 
-type UserService = {
+export type UserService = {
     id: number,
     notify: boolean, 
     rank: number,
@@ -53,9 +57,23 @@ const useAccount = () => {
      * Retrieves the user roles from the backend.
      * @returns {Promise<BackendResponse<Array<string>>>} The response from the backend containing an array of roles.
      */
-    const getRoles = (): string[] => {
-        return ['admin', 'incident-admin', 'data-admin', 'user-admin'];
-        //FIXME: return this.getHandler('/api/me/roles', []) //NEXT: uncomment and test
+    const getRoles = (): BackendResponse<string[]> => {
+        // [['admin', 'incident-admin', 'data-admin', 'user-admin'], null];
+        return  api.getHandler<string[]>('/api/me/roles', undefined) 
+    }
+
+    const fetchProfile = async (): BackendResponse<UserProfile> => {
+        const [profile, errProfile] = await getProfile();
+        if (errProfile) {
+            return [null, errProfile];
+        }
+
+        const [roles, errRoles] = await getRoles();
+        if (errRoles) {
+            return [null, errRoles];
+        }
+
+        return [{...profile, roles: roles}, null];
     }
 
     /**
@@ -85,7 +103,7 @@ const useAccount = () => {
     }
     
 
-    return {getProfile, getRoles, getUserServices, updateUserServices, deleteUserService}
+    return {fetchProfile, getUserServices, updateUserServices, deleteUserService}
 };
 
 export default useAccount;

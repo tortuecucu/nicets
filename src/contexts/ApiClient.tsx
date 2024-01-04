@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } f
 import Cookies from 'js-cookie';
 import { Parameters, useConfig } from "../hooks/config/useConfig";
 import { BackendResponse } from "src/types/api";
+import { QueryClient, } from '@tanstack/react-query'
 
 const ACCESS_TOKEN_COOKIE_NAME = "nat";
 const REFRESH_TOKEN_COOKIE_NAME = "rat";
@@ -30,6 +31,7 @@ export default class ApiClient {
   instance: AxiosInstance;
   _accessToken: string | undefined;
   refreshToken: string | undefined;
+  queryClient: QueryClient
 
   constructor() {
     this.config = useConfig()
@@ -42,6 +44,7 @@ export default class ApiClient {
 
     this.#init401Interceptor();
     this.connect()
+    this.queryClient = new QueryClient()
   }
 
 

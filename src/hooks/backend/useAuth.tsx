@@ -2,6 +2,9 @@ import { useApi } from "../../contexts/ApiProvider"
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Custom hook for managing authentication.
+ */
 const useAuth = () => {
     const api = useApi()
     const navigate = useNavigate()
