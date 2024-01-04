@@ -22,7 +22,7 @@ const AffectedPanel = (props: AffectedPanelProps) => {
             <h6 className="mt-4 mb-3">Sites affectés</h6>
             <SitesAffected outage={props.outage} sites={getSites()} />
             <h6 className="mt-4 mb-3">Retours des utilisateurs</h6>
-            <Tornado data={tornadoData} title={""} value="count" dimensions={['result', 'site', 'connection']} leftValue="yes" />
+            <Tornado data={tornadoData} title={""} valueField="count" dimensionFields={['result', 'site', 'connection']} leftValue="yes" />
             <hr className="hr" />
             <div className="hstack">
                 <ActionPanel outage={props.outage} compact={true} className={'ms-auto'} />

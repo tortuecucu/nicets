@@ -1,6 +1,7 @@
 import { RouteObject } from "react-router-dom";
-import useAccount from "src/hooks/backend/useAccount";
+import { useUserContext } from "src/contexts/UserContext";
 import LazyLoader from "src/router/LazyLoader";
+
 
 type AdminRoute = {
     role: string,
@@ -27,10 +28,9 @@ const ROUTES: AdminRoute[] = [
 ] 
 
 const useAdminRoutes = () => {
-    const { getRoles } = useAccount();
-    const roles = getRoles();
+    const { hasRole } = useUserContext();
 
-    const routes: RouteObject[] = ROUTES.filter(route => roles.includes(route.role)).map(route => route.route);
+    const routes: RouteObject[] = ROUTES.filter(route => hasRole(route.role)).map(route => route.route);
 
     return { routes }
 }

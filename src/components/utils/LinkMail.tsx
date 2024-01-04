@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
+interface LinkMailProps {
+    email: string,
+    subject?: string,
+    body?: string,
+    [x: string]: any
+}
 
-const LinkMail = (props) => {
+const LinkMail = (props: LinkMailProps) => {
     const href = () => {
         let params = props.subject || props.body ? '?' : '';
         if (props.subject) params += `subject=${encodeURIComponent(props.subject)}`;
@@ -12,11 +17,6 @@ const LinkMail = (props) => {
     return(
         <Button href={href()} {...props}>{props.children}</Button>
     )
-}
-LinkMail.propTypes = {
-    email: PropTypes.string,
-    subject: PropTypes.string,
-    body: PropTypes.string,
 }
 LinkMail.defaultProps = {
     email: undefined,

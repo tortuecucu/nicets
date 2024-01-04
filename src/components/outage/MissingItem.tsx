@@ -3,19 +3,31 @@ import { useState } from "react"
 import { Modal } from "react-bootstrap"
 import {UnfinishedFeature} from "../utils/Alerts";
 
-function MissingBanner({ className, callBack }) {
+type Callback = (action: string) => void
+
+interface MissingBannerProps {
+    className: string,
+    callback: () => void
+}
+
+function MissingBanner(props: MissingBannerProps) {
     return (
-        <div className={`bg-warning-subtle bg-opacity-75 p-2 rounded hstack ` + className}>
+        <div className={`bg-warning-subtle bg-opacity-75 p-2 rounded hstack ` + props.className}>
             <p className='text-warning-emphasis ps-4 m-0 fw-semibold'>Il manque quelque chose ? <span className='fw-light'>Partagez l'info avec les autres utilisateurs !</span></p>
-            <button className="btn btn-warning ms-auto" onClick={callBack}>Je vois, j'agis !</button>
+            <button className="btn btn-warning ms-auto" onClick={props.callback}>Je vois, j'agis !</button>
         </div>
     )
 }
 
-function MissingModal({ visible, callback }) {
+interface MissingModalProps {
+    visible: boolean,
+    callback: () => void
+}
+
+function MissingModal(props: MissingModalProps) {
     return (
         <>
-            <Modal show={visible} onHide={callback} size='xl' backdrop={true} centered={true}>
+            <Modal show={props.visible} onHide={props.callback} size='xl' backdrop={true} centered={true}>
                 <Modal.Header closeButton>
                     <Modal.Title>Poka Yoke perturbation</Modal.Title>
                 </Modal.Header>
@@ -28,8 +40,8 @@ function MissingModal({ visible, callback }) {
 }
 
 function ModalContent() {
-    const [step, setStep] = useState(0);
-    const stepChanged = (index) => {
+    const [step, setStep] = useState<number>(0);
+    const stepChanged = (index: number) => {
         setStep(index);
     }
     return (
@@ -47,7 +59,12 @@ function ModalContent() {
     )
 }
 
-function Stepper({ stepIndex }) {
+interface StepperProps {
+    stepIndex: number
+}
+
+function Stepper(props: StepperProps) {
+    const {stepIndex} = props
     return (<>
         <div className="list-group border-primary-subtle shadow">
             <label className="list-group-item d-flex gap-2">
@@ -76,14 +93,18 @@ function Stepper({ stepIndex }) {
     </>)
 }
 
-function Wizard({ stepChanged }) {
+interface WizardProps {
+    stepChanged: (index: number) => void
+}
+
+function Wizard(props: WizardProps) {
     const [step, setStep] = useState(0);
-    const clickCallback = (action, index) => {
+    const clickCallback = (action: string) => {
         switch (action) {
             case 'next':
                 const newState = step + 1;
                 setStep(newState);
-                stepChanged(newState);
+                props.stepChanged(newState);
                 break;
 
             default:
@@ -99,23 +120,34 @@ function Wizard({ stepChanged }) {
     </>)
 }
 
-function PanelBase({ children, title, footer }) {
+interface PanelBaseProps {
+    title: string,
+    children: any,
+    footer?: any
+
+}
+
+function PanelBase(props: PanelBaseProps) {
     return (<>
         <div className="panel shadow border rounded p-3 pt-2" style={{ "height": "30rem" }}>
-            <h4 className="fw-semibold text-primary mb-4">{title}</h4>
-            <div className="content">{children}</div>
-            {footer && <>
+            <h4 className="fw-semibold text-primary mb-4">{props.title}</h4>
+            <div className="content">{props.children}</div>
+            {props.footer && <>
                 <div className="hstack border-top pt-2">
-                    {footer}
+                    {props.footer}
                 </div>
             </>}
         </div>
     </>)
 }
 
-function PanelHome({ callback }) {
+interface CallbackProp {
+    callback: Callback
+}
+
+function PanelHome(props: CallbackProp) {
     const nextCallback = () => {
-        callback('next', null);
+        props.callback('next');
     }
     return (
         <PanelBase title={'Il manque un incident ?'} footer={<><button className="btn btn-primary ms-auto" onClick={nextCallback}>Suivant</button></>}>
@@ -125,10 +157,10 @@ function PanelHome({ callback }) {
     )
 }
 
-function PanelDeclaration({ callback }) {
+function PanelDeclaration(props: CallbackProp) {
     const inctInput = useRef(null)
     const nextCallback = () => {
-        callback('next', null);
+        props.callback('next');
     }
     return (
         <PanelBase title={'1/3 - Un incident doit avoir été déclaré'} footer={<><button className="btn btn-primary ms-auto" onClick={nextCallback}>Suivant</button></>}>
@@ -143,9 +175,9 @@ function PanelDeclaration({ callback }) {
     )
 }
 
-function PanelImpact({ callback }) {
+function PanelImpact(props: CallbackProp) {
     const nextCallback = () => {
-        callback('next', null);
+        props.callback('next');
     }
     return (
         <PanelBase title={'2/3 - Qualification de l\'impact'}>
@@ -182,9 +214,9 @@ function PanelImpact({ callback }) {
     )
 }
 
-function PanelPriority({ callback }) {
+function PanelPriority(props: CallbackProp) {
     const nextCallback = () => {
-        callback('next', null);
+        props.callback('next');
     }
     return (
         <PanelBase title={'2/3 - Triage & priorisation de l\'incident'} footer={<><button className="btn btn-primary ms-auto" onClick={nextCallback}>Suivant</button></>}>
@@ -230,7 +262,11 @@ function PanelPriority({ callback }) {
     )
 }
 
-function MissingItem({ className }) {
+interface MissingItemProps {
+    className?: string
+}
+
+function MissingItem(props: MissingItemProps) {
     const [visible, setVisible] = useState(false);
     const clickCallback = () => {
         setVisible(true);
@@ -240,7 +276,7 @@ function MissingItem({ className }) {
     }
     return (
         <>
-            <MissingBanner className={className} callBack={clickCallback} />
+            <MissingBanner className={props.className || ""} callback={clickCallback} />
             <MissingModal visible={visible} callback={hideCallback} />
         </>
     )

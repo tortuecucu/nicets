@@ -1,22 +1,38 @@
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import { DataManager } from './DataPuller';
-import PropTypes from "prop-types"
 import { useState } from 'react';
 
-const DataPullButton = (props) => {
+interface DataPullButtonProps {
+    promise: () => Promise<any>,
+    spinner?: JSX.Element,
+    errorLabel?: string,
+    failLabel?: string,
+    successLabel?: string,
+    successElement?: JSX.Element,
+    successCallback?: () => void,
+    children: React.JSX.Element
+}
+
+interface BtnProps {
+    onClick?: () => void,
+    spinner?: JSX.Element,
+    children?: React.JSX.Element
+}
+
+const DataPullButton = (props: DataPullButtonProps) => {
     const [isSubmitted, setIsSubmitted] = useState(false)
 
-    const Btn = ({ onClick }) => {
+    const Btn = (props: BtnProps ) => {
         return (
-            <Button onClick={onClick} {...props}>
+            <Button onClick={props.onClick} {...props}>
                 {isSubmitted && props.spinner}
                 {props.children}
             </Button>
         )
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (): void => {
         setIsSubmitted(true)
     }
 
@@ -38,7 +54,7 @@ const DataPullButton = (props) => {
     return (
         <>
             {!isSubmitted && <Btn onClick={handleSubmit} />}
-            <DataManager promise={props.promise} show={isSubmitted} loadingElement={<Btn />} errorElement={<ErrorButton />} fallback={<FailButton />}>
+            <DataManager promise={props.promise} show={isSubmitted} loadingElement={<Btn />} errorElement={ErrorButton} fallback={FailButton}>
                 {(props.successElement) ?
                     props.successElement
                     :
@@ -48,16 +64,6 @@ const DataPullButton = (props) => {
         </>
 
     )
-}
-DataPullButton.propTypes = {
-    children: PropTypes.element,
-    promise: PropTypes.func,
-    spinner: PropTypes.element,
-    errorLabel: PropTypes.string,
-    failLabel: PropTypes.string,
-    successLabel: PropTypes.string,
-    successElement: PropTypes.element,
-    successCallback: PropTypes.func
 }
 DataPullButton.defaultProps = {
     spinner: <Spinner animation='border' role='status' />,

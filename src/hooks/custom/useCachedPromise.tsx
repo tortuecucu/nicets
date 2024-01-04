@@ -10,17 +10,17 @@ import { UseStorageOptions } from "./useStorage";
  * @param {object} options 
  * @returns hook
  */
-const useCachedPromise = (promise: PromiseProvider, key: string, options: .UseStorageOptions) => {
-    const [result, setResult] = useStorage(key, options);
+function useCachedPromise<S> (promise: PromiseProvider, key: string, options: UseStorageOptions)  {
+    const {get, set} = useStorage<S>(key, options);
     const [wasCalled, setWasCalled] = useState<boolean>(false);
 
     const wrapper = async () => {
         if (wasCalled) {
-            return result
+            return get()
         } else {
             const res = await promise()
             setWasCalled(true)
-            setResult(res)
+            set(res)
             return res
         }
     }
